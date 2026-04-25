@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design-system reference kits + planning artifacts. JSX prototypes under
+    // .planning/design/ are read-only inspo (not imported, not built); .claude/
+    // contains agent worktree mirrors. Lint pre-existed Phase 03.1; ignoring
+    // here keeps the gauntlet honest about app/ code only.
+    ".planning/**",
+    ".claude/**",
   ]),
 ]);
 

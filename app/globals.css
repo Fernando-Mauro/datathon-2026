@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Bridge next/font CSS variables (set on <html> by app/layout.tsx) → Tailwind utilities.
+ * `@theme inline` resolves var() at utility-emit time so `font-sans` / `font-serif`
+ * directly reference the IBM Plex CSS variables without an extra indirection. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-plex-sans);
+  --font-serif: var(--font-plex-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* hey-banco token system. Tailwind 4 emits utilities (bg-hey-bg, text-hey-fg-1,
+ * border-hey-divider, bg-hey-blue, rounded-hey-pill, …) automatically from
+ * --color-* and --radius-* namespaces. Values locked by UI-SPEC §Color Tokens
+ * + §Radii; do not edit without updating that spec. */
+@theme {
+  /* Neutrals */
+  --color-hey-bg: #000000;
+  --color-hey-surface-1: #0E0E0E;
+  --color-hey-surface-2: #1A1A1A;
+  --color-hey-surface-3: #1F1F1F;
+  --color-hey-divider: rgba(255, 255, 255, 0.08);
+  --color-hey-outline: rgba(255, 255, 255, 0.16);
+
+  /* Text */
+  --color-hey-fg-1: #FFFFFF;
+  --color-hey-fg-2: rgba(255, 255, 255, 0.60);
+  --color-hey-fg-3: rgba(255, 255, 255, 0.40);
+  --color-hey-fg-disabled: rgba(255, 255, 255, 0.24);
+
+  /* Brand blue */
+  --color-hey-blue: #3478F6;
+  --color-hey-blue-hover: #2C6AE0;
+  --color-hey-blue-press: #245BC2;
+  --color-hey-blue-bg: #2D6FF0;
+  --color-hey-link: #4A90FF;
+
+  /* Accent palette (six color/bg pairs) */
+  --color-hey-accent-purple: #B084FF;
+  --color-hey-accent-purple-bg: rgba(176, 132, 255, 0.16);
+  --color-hey-accent-amber: #FFB547;
+  --color-hey-accent-amber-bg: rgba(255, 181, 71, 0.16);
+  --color-hey-accent-magenta: #FF6FD3;
+  --color-hey-accent-magenta-bg: rgba(255, 111, 211, 0.16);
+  --color-hey-accent-cyan: #4FD8E0;
+  --color-hey-accent-cyan-bg: rgba(79, 216, 224, 0.16);
+  --color-hey-accent-sky: #5AB6FF;
+  --color-hey-accent-sky-bg: rgba(90, 182, 255, 0.16);
+  --color-hey-accent-green: #4FE5A1;
+  --color-hey-accent-green-bg: rgba(79, 229, 161, 0.16);
+
+  /* Semantic */
+  --color-hey-success: #4FE5A1;
+  --color-hey-warning: #FFB547;
+  --color-hey-error: #FF5D5D;
+  --color-hey-info: #5AB6FF;
+
+  /* Radii */
+  --radius-hey-sm: 0.5rem;
+  --radius-hey-md: 0.75rem;
+  --radius-hey-lg: 1rem;
+  --radius-hey-pill: 9999px;
+}
+
+/* Composite values not utility-class-bearing (consumed via var() in components/CSS). */
+:root {
+  --hey-havi-grad: conic-gradient(
+    from 0deg,
+    #FF3D5A 0deg,
+    #FF8A3D 50deg,
+    #FFD93D 100deg,
+    #4FE56F 160deg,
+    #4FD8E0 220deg,
+    #3478F6 280deg,
+    #B084FF 320deg,
+    #FF3D5A 360deg
+  );
+  --hey-scrim: rgba(0, 0, 0, 0.60);
+  --hey-shadow-sheet: 0 -8px 32px rgba(0, 0, 0, 0.50);
+  --hey-shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.60);
+  --hey-app-width: 420px;
+  --hey-ease-standard: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* HAVI ring — conic-gradient halo with rotating ::before and bg-colored ::after
+ * cutout. `--ring-size` is per-instance via inline style (default 56px). Honors
+ * prefers-reduced-motion. */
+@layer components {
+  .hey-havi-ring {
+    width: var(--ring-size, 56px);
+    height: var(--ring-size, 56px);
+    flex: none;
+    position: relative;
+    filter: drop-shadow(0 0 24px rgba(180, 120, 255, 0.35));
+  }
+  .hey-havi-ring::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: var(--hey-havi-grad);
+    animation: hey-havi-spin 8s linear infinite;
+  }
+  .hey-havi-ring::after {
+    content: "";
+    position: absolute;
+    inset: 7%;
+    border-radius: 9999px;
+    background: var(--color-hey-bg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hey-havi-ring::before {
+      animation: none;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes hey-havi-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hey-typing-dot {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* App frame container — caps the chat shell at 420px on desktop while remaining
+ * full-width on mobile. */
+.hey-app-frame {
+  max-width: var(--hey-app-width);
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* Type-ramp shorthands for high-recurrence patterns (amounts use serif tabular,
+ * eyebrows use uppercase tracking). */
+@layer components {
+  .hey-amount {
+    font-family: var(--font-serif);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  .hey-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    color: var(--color-hey-fg-2);
+  }
 }
