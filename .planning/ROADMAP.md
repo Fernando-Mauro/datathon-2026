@@ -35,7 +35,7 @@ Plans:
 - [x] 01-02-PLAN.md — Wave B: Create `app/{error,loading,not-found}.tsx` boundaries (Next 16.2 `unstable_retry`), `.env.example`, and Amplify-aware `.gitignore`
 - [x] 01-03-PLAN.md — Wave C: Manual Amplify Gen 2 install — devDeps + `amplify/{backend.ts,package.json,tsconfig.json}` + root tsconfig exclude
 - [x] 01-04-PLAN.md — Wave D: Add README `## Setup` section (AWS CLI install, IAM, profile config, sandbox lifecycle)
-- [ ] 01-05-PLAN.md — Wave E: Manual gate + `npx ampx sandbox --once` smoke deploy to CloudFormation (autonomous: false; requires AWS account)
+- [x] 01-05-PLAN.md — Wave E: Manual gate + `npx ampx sandbox --once` smoke deploy to CloudFormation (autonomous: false; requires AWS account)
 
 ### Phase 2: Email/Password Auth + Authenticator UI
 **Goal**: Un usuario puede registrarse con email y contraseña, verificar el email, iniciar y cerrar sesión desde la app, y la sesión sobrevive a un refresco.
@@ -90,7 +90,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Amplify Backend Skeleton | 4/5 | In progress | - |
+| 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
 | 2. Email/Password Auth + Authenticator UI | 0/TBD | Not started | - |
 | 3. Google OAuth Federation | 0/TBD | Not started | - |
 | 4. Protected Route & Auth Guard | 0/TBD | Not started | - |

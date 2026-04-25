@@ -48,9 +48,9 @@ Qué phases cubren qué requirements.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Pending |
+| INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | INFRA-02 | Phase 5 — Amplify Hosting + GitHub CI | Pending |
-| INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Pending |
+| INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
 | AUTH-02 | Phase 3 — Google OAuth Federation | Pending |
 | AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
