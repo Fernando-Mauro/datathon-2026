@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: "Completed 02-03-PLAN.md (frontend wiring: AmplifyProvider + /login + /app + Sign in link)"
-last_updated: "2026-04-25T16:18:58.232Z"
+last_updated: "2026-04-25T16:27:39.772Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 10
-  completed_plans: 8
-  percent: 80
+  completed_plans: 9
+  percent: 90
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 2 (Email/Password Auth + Authenticator UI) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
@@ -89,6 +89,7 @@ Recent decisions affecting current work:
 - Plan 02-03: Amplify.configure(outputs, { ssr: true }) — REQUIRED for Next.js per official docs. Switches token storage to cookies (per RESEARCH L-3). AUTH-05 still met. SUPERSEDES CONTEXT D-28 wording (fix lands in Plan 02-05 Task 5).
 - Plan 02-03: <Authenticator /> rendered bare (no signUpAttributes / formFields / components / loginMechanisms props). Zero Configuration auto-renders Email + Name + Password from amplify_outputs.json#standard_required_attributes (per RESEARCH L-6).
 - Plan 02-03: useRouter sourced from next/navigation everywhere (App Router). next/router is Pages Router only and is forbidden by anti-pattern grep (per RESEARCH L-7). signOut from aws-amplify/auth (v6 subpath, NOT v5 Auth namespace).
+- Plan 02-04: Cognito User Pool live in us-east-1 (us-east-1_6l4dSfRCz) via incremental sandbox deploy (~45s). amplify_outputs.json populated. Read-only AWS introspection denied by AmplifyBackendDeployFullAccess scope — deploy event log + outputs file substitute as evidence (accepted deviation).
 
 ### Pending Todos
 
