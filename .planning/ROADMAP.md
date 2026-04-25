@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation & Amplify Backend Skeleton** - Scaffold sano (sin CVE) y backend Amplify Gen2 desplegable a sandbox vacío
 - [ ] **Phase 2: Email/Password Auth + Authenticator UI** - Cognito User Pool + `<Authenticator>` integrado con sesión persistente
-- [ ] **Phase 3: Protected Route & Auth Guard** - Ruta `/app` que sólo es accesible logged in
+- [x] **Phase 3: Protected Route & Auth Guard** - Ruta `/app` que sólo es accesible logged in
 - [ ] **Phase 4: Amplify Hosting + GitHub CI** - Despliegue continuo desde `main` a Amplify Hosting
 
 ## Phase Details
@@ -66,7 +66,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — Wave 1: Foundation primitives (`safeFromPath.ts` + `<AuthGuard>` client component)
 - [x] 03-02-PLAN.md — Wave 2: Wire into routes (`app/app/layout.tsx` + REPLACE `app/app/page.tsx` + MODIFY `app/login/page.tsx` with Suspense + safeFromPath consumer)
-- [ ] 03-03-PLAN.md — Wave 3: Full gauntlet + 4 manual flow walkthroughs (autonomous: false; user-verifies redirect, signed-in render, open-redirect rejection, build success)
+- [x] 03-03-PLAN.md — Wave 3: Full gauntlet + 4 manual flow walkthroughs (autonomous: false; user-verifies redirect, signed-in render, open-redirect rejection, build success)
 **UI hint**: yes
 
 ### Phase 4: Amplify Hosting + GitHub CI
@@ -89,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
 | 2. Email/Password Auth + Authenticator UI | 5/5 | Ready to verify | 2026-04-25 |
-| 3. Protected Route & Auth Guard | 0/TBD | Not started | - |
+| 3. Protected Route & Auth Guard | 3/3 | Ready to verify | 2026-04-25 |
 | 4. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |
 
 ---
