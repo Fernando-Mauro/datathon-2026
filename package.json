@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "audit": "bun audit",
+    "clean": "rm -rf .next .amplify amplify_outputs.json"
   },
   "dependencies": {
     "next": "16.2.4",
