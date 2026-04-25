@@ -19,10 +19,14 @@ export default function Home() {
       <main className="hey-app-frame flex flex-1 flex-col items-center justify-center gap-8 px-6 py-16 text-center">
         <HaviRing size={96} />
         <div className="flex flex-col gap-3">
-          <h1 className="font-serif text-[36px] font-semibold leading-tight text-hey-fg-1">
-            Tu copiloto financiero, en una conversación.
+          <p className="hey-eyebrow">Conoce a</p>
+          <h1 className="font-serif text-[44px] font-bold leading-none text-hey-fg-1">
+            Havi<span className="text-hey-blue">CA</span>
           </h1>
-          <p className="text-[15px] leading-snug text-hey-fg-2">
+          <p className="font-serif text-[20px] font-medium leading-snug text-hey-fg-1">
+            Tu copiloto financiero, en una conversación.
+          </p>
+          <p className="mt-2 text-[15px] leading-snug text-hey-fg-2">
             Pregúntale a HAVI cuánto gastaste, paga tu tarjeta o revisa tus metas — sin menús, sin fricción.
           </p>
         </div>
@@ -36,7 +40,7 @@ export default function Home() {
       </main>
 
       <footer className="hey-app-frame px-4 py-6 text-center text-[11px] text-hey-fg-3">
-        datatón 2026 — demo conversacional inspirada en hey banco
+        HaviCA — copiloto financiero conversacional
       </footer>
     </div>
   );

@@ -19,8 +19,8 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "data, — datathon 2026",
-  description: "hey, conversational banking demo",
+  title: "HaviCA — tu copiloto financiero",
+  description: "HaviCA es tu copiloto financiero conversacional. Pregúntale a HAVI.",
 };
 
 export default function RootLayout({

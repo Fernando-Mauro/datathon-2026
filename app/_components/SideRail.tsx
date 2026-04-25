@@ -60,7 +60,7 @@ export function SideRail() {
       >
         <HaviRing size={36} />
         <span className="pointer-events-none absolute left-full ml-3 origin-left scale-95 rounded-hey-sm border border-hey-divider bg-hey-surface-2 px-2.5 py-1.5 font-serif text-[13px] font-semibold text-hey-fg-1 opacity-0 shadow-lg transition-all duration-150 group-hover:scale-100 group-hover:opacity-100">
-          data,
+          Havi<span className="text-hey-blue">CA</span>
         </span>
       </Link>
 
