@@ -20,9 +20,11 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 - [x] **AUTH-01
 **: Cognito User Pool con email + contraseña configurado declarativamente en `amplify/auth/resource.ts` vía `defineAuth({ loginWith: { email: true } })`
 - [ ] **AUTH-02**: Federation con Google OAuth funcionando — Google Cloud OAuth client creado, credenciales en Amplify secrets, callback URLs registrados en Cognito User Pool
-- [ ] **AUTH-03**: Componente `<Authenticator>` de `@aws-amplify/ui-react` integrado en Next.js — flujos de sign-up (con verificación email), sign-in, sign-out y reset password operativos
+- [x] **AUTH-03
+**: Componente `<Authenticator>` de `@aws-amplify/ui-react` integrado en Next.js — flujos de sign-up (con verificación email), sign-in, sign-out y reset password operativos
 - [ ] **AUTH-04**: Ruta protegida (ej. `/app` o `/dashboard`) que redirige a `/login` (o muestra `<Authenticator>`) cuando no hay sesión activa, y muestra contenido cuando sí
-- [ ] **AUTH-05**: Sesión persiste entre refrescos del browser (token storage gestionado por Amplify — comprobado en dev y en deploy)
+- [x] **AUTH-05
+**: Sesión persiste entre refrescos del browser (token storage gestionado por Amplify — comprobado en dev y en deploy)
 
 ## v2 Requirements
 

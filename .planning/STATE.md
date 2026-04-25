@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md (Cognito User Pool resource declared + wired)
-last_updated: "2026-04-25T16:01:51.593Z"
+stopped_at: "Completed 02-03-PLAN.md (frontend wiring: AmplifyProvider + /login + /app + Sign in link)"
+last_updated: "2026-04-25T16:18:58.232Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 10
-  completed_plans: 7
-  percent: 70
+  completed_plans: 8
+  percent: 80
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 2 (Email/Password Auth + Authenticator UI) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [██████░░░░] 60%
 | Phase 01-foundation-amplify-backend-skeleton P02 | 3min | 2 tasks tasks | 5 files files |
 | Phase 01-foundation-amplify-backend-skeleton P04 | 3min | 1 task tasks | 1 file files |
 | Phase 02-email-password-auth-authenticator-ui P01 | 3min | 2 tasks tasks | 2 files files |
+| Phase 02-email-password-auth-authenticator-ui PP03 | 3min | 5 tasks tasks | 6 files files |
 
 ## Accumulated Context
 
@@ -84,6 +85,10 @@ Recent decisions affecting current work:
 - Phase 2 Plan 01: Omitted passwordPolicy and userVerification — Cognito defaults already match D-19/D-20 (verified against installed @aws-amplify/auth-construct/lib/defaults.js + aws-cdk-lib/aws-cognito/lib/user-pool.js)
 - Phase 2 Plan 01: Dropped Phase 1 backend.ts JSDoc — 'bare skeleton' explanation no longer factually correct now that auth resource is wired (PATTERNS Option A)
 - Plan 02-02: aws-amplify@6.16.4 + @aws-amplify/ui-react@6.15.3 installed to dependencies (NOT devDeps). adapter-nextjs deferred to Phase 4 per RESEARCH key finding #3. Existing 24 audit ignores cover Amplify v6 transitives — no new ignores needed.
+- Plan 02-03: AmplifyProvider hoisted to ROOT (app/AmplifyProvider.tsx) — supersedes CONTEXT D-23 which scoped it to /login. Reason: signOut() in /app would race against Amplify.configure() (RESEARCH §7 / L-2).
+- Plan 02-03: Amplify.configure(outputs, { ssr: true }) — REQUIRED for Next.js per official docs. Switches token storage to cookies (per RESEARCH L-3). AUTH-05 still met. SUPERSEDES CONTEXT D-28 wording (fix lands in Plan 02-05 Task 5).
+- Plan 02-03: <Authenticator /> rendered bare (no signUpAttributes / formFields / components / loginMechanisms props). Zero Configuration auto-renders Email + Name + Password from amplify_outputs.json#standard_required_attributes (per RESEARCH L-6).
+- Plan 02-03: useRouter sourced from next/navigation everywhere (App Router). next/router is Pages Router only and is forbidden by anti-pattern grep (per RESEARCH L-7). signOut from aws-amplify/auth (v6 subpath, NOT v5 Auth namespace).
 
 ### Pending Todos
 
@@ -104,8 +109,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-25T15:56:15.542Z
-Stopped at: Completed 02-01-PLAN.md (Cognito User Pool resource declared + wired)
+Last session: 2026-04-25T16:18:46.307Z
+Stopped at: Completed 02-03-PLAN.md (frontend wiring: AmplifyProvider + /login + /app + Sign in link)
 Resume file: None
 
 **Planned Phase:** 2 (Email/Password Auth + Authenticator UI) — 5 plans — 2026-04-25T15:47:24.666Z
