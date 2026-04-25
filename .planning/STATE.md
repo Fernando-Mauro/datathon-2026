@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
+status: verifying
 stopped_at: "Completed 02-03-PLAN.md (frontend wiring: AmplifyProvider + /login + /app + Sign in link)"
-last_updated: "2026-04-25T16:27:39.772Z"
+last_updated: "2026-04-25T16:53:42.246Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 9
-  percent: 90
+  completed_plans: 10
+  percent: 100
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 
 Phase: 2 (Email/Password Auth + Authenticator UI) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-04-25
 
 Progress: [████████░░] 80%
@@ -90,6 +90,7 @@ Recent decisions affecting current work:
 - Plan 02-03: <Authenticator /> rendered bare (no signUpAttributes / formFields / components / loginMechanisms props). Zero Configuration auto-renders Email + Name + Password from amplify_outputs.json#standard_required_attributes (per RESEARCH L-6).
 - Plan 02-03: useRouter sourced from next/navigation everywhere (App Router). next/router is Pages Router only and is forbidden by anti-pattern grep (per RESEARCH L-7). signOut from aws-amplify/auth (v6 subpath, NOT v5 Auth namespace).
 - Plan 02-04: Cognito User Pool live in us-east-1 (us-east-1_6l4dSfRCz) via incremental sandbox deploy (~45s). amplify_outputs.json populated. Read-only AWS introspection denied by AmplifyBackendDeployFullAccess scope — deploy event log + outputs file substitute as evidence (accepted deviation).
+- Plan 02-05: 4 D-29 manual flows validated (sign-up+verify, sign-out+re-sign-in, refresh, reset skipped with rationale). RESEARCH L-3 walked back: Amplify.configure(outputs) without ssr:true (cookie adapter hangs without @aws-amplify/adapter-nextjs). CONTEXT D-28 wording corrected — localStorage stays as token storage (original was right).
 
 ### Pending Todos
 

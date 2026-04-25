@@ -52,7 +52,7 @@ Plans:
 - [x] 02-02-PLAN.md — Wave B: Frontend deps — `bun add aws-amplify@^6.16.4 @aws-amplify/ui-react@^6.15.3` + extend audit ignore-list if new CVEs surface
 - [x] 02-03-PLAN.md — Wave C: Frontend wiring — root `app/AmplifyProvider.tsx` (ssr:true), `app/layout.tsx` mount, `app/login/page.tsx`, `app/app/{page,SignOutButton}.tsx`, home Sign-in link
 - [x] 02-04-PLAN.md — Wave D: Sandbox redeploy — `npx ampx sandbox --once` to add Cognito + IdentityPool + IAM, verify amplify_outputs.json populated (autonomous: true with documented executor-fallback)
-- [ ] 02-05-PLAN.md — Wave E: Manual D-29 flows (sign-up + verify, sign-out/re-sign-in, refresh, reset password) + CONTEXT D-28 wording fix per L-3 (autonomous: false)
+- [x] 02-05-PLAN.md — Wave E: Manual D-29 flows (sign-up + verify, sign-out/re-sign-in, refresh, reset password) + CONTEXT D-28 wording fix per L-3 (autonomous: false)
 **UI hint**: yes
 
 ### Phase 3: Google OAuth Federation
@@ -97,7 +97,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
-| 2. Email/Password Auth + Authenticator UI | 4/5 | In Progress | - |
+| 2. Email/Password Auth + Authenticator UI | 5/5 | Ready to verify | 2026-04-25 |
 | 3. Google OAuth Federation | 0/TBD | Not started | - |
 | 4. Protected Route & Auth Guard | 0/TBD | Not started | - |
 | 5. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |

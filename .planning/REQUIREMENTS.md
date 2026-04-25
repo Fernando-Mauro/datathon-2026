@@ -54,11 +54,11 @@ Qué phases cubren qué requirements.
 | INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | INFRA-02 | Phase 5 — Amplify Hosting + GitHub CI | Pending |
 | INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
-| AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete (source) |
+| AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 | AUTH-02 | Phase 3 — Google OAuth Federation | Pending |
-| AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
+| AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 | AUTH-04 | Phase 4 — Protected Route & Auth Guard | Pending |
-| AUTH-05 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
+| AUTH-05 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 
 **Coverage:**
 - v1 requirements: 8 total
