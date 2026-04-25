@@ -93,6 +93,10 @@ Recent decisions affecting current work:
 - Plan 02-05: 4 D-29 manual flows validated (sign-up+verify, sign-out+re-sign-in, refresh, reset skipped with rationale). RESEARCH L-3 walked back: Amplify.configure(outputs) without ssr:true (cookie adapter hangs without @aws-amplify/adapter-nextjs). CONTEXT D-28 wording corrected — localStorage stays as token storage (original was right).
 - Phase 3 complete: AuthGuard mounted via app/app/layout.tsx gates /app/* (D-30); safeFromPath allowlist closes open-redirect threats T-03-08/09/10 (verified live in 03-03 manual flows); bun run build confirms Suspense around useSearchParams (L-1) and no client-layout metadata export (L-9). AUTH-04 satisfied. Server-side @aws-amplify/adapter-nextjs deferred per D-41 — reopen if datathon feature needs API routes.
 
+### Roadmap Evolution
+
+- Phase 03.1 inserted after Phase 3: Hey-banco design system + Variante A conversational HAVI (URGENT — design pivot, mock fintech UI replacing /app placeholder pre-Hosting)
+
 ### Pending Todos
 
 None yet.

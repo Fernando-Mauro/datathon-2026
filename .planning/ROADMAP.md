@@ -69,6 +69,16 @@ Plans:
 - [x] 03-03-PLAN.md — Wave 3: Full gauntlet + 4 manual flow walkthroughs (autonomous: false; user-verifies redirect, signed-in render, open-redirect rejection, build success)
 **UI hint**: yes
 
+### Phase 03.1: Hey-banco design system + Variante A conversational HAVI (INSERTED)
+
+**Goal:** [Urgent work - to be planned]
+**Requirements**: TBD
+**Depends on:** Phase 3
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 03.1 to break down)
+
 ### Phase 4: Amplify Hosting + GitHub CI
 **Goal**: Cada push a `main` en GitHub dispara un build en AWS Amplify Hosting que despliega la app + backend a producción automáticamente.
 **Depends on**: Phase 3
