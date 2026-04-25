@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: .planning/phases/03.1-hey-banco-design-system-variante-a-conversational-havi/03.1-CONTEXT.md
-last_updated: "2026-04-25T20:13:07.938Z"
+stopped_at: .planning/phases/03.1-hey-banco-design-system-variante-a-conversational-havi/03.1-UI-SPEC.md
+last_updated: "2026-04-25T20:49:29.611Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
@@ -116,8 +116,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: Phase 03.1 context gathered (Hey-banco design system + Variante A)
-Stopped at: .planning/phases/03.1-hey-banco-design-system-variante-a-conversational-havi/03.1-CONTEXT.md
+Last session: Phase 03.1 UI-SPEC approved
+Stopped at: .planning/phases/03.1-hey-banco-design-system-variante-a-conversational-havi/03.1-UI-SPEC.md
 Resume file: None
 
 **Planned Phase:** 4 (Amplify Hosting + GitHub CI) — TBD plans — pending /gsd-verify-work for Phase 3
