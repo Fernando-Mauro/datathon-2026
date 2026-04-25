@@ -19,7 +19,6 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 
 - [x] **AUTH-01
 **: Cognito User Pool con email + contraseña configurado declarativamente en `amplify/auth/resource.ts` vía `defineAuth({ loginWith: { email: true } })`
-- [ ] **AUTH-02**: Federation con Google OAuth funcionando — Google Cloud OAuth client creado, credenciales en Amplify secrets, callback URLs registrados en Cognito User Pool
 - [x] **AUTH-03
 **: Componente `<Authenticator>` de `@aws-amplify/ui-react` integrado en Next.js — flujos de sign-up (con verificación email), sign-in, sign-out y reset password operativos
 - [ ] **AUTH-04**: Ruta protegida (ej. `/app` o `/dashboard`) que redirige a `/login` (o muestra `<Authenticator>`) cuando no hay sesión activa, y muestra contenido cuando sí
@@ -40,7 +39,8 @@ Excluido explícitamente. Documentado para evitar scope creep.
 | Storage S3 | Idem; depende del producto final |
 | Magic link login | Overkill para v1; añade dependencia de SES + plantillas |
 | MFA / 2FA | Innecesario para usuarios de hackathon de un día |
-| GitHub OAuth | Google ya cubre la mayoría de casos sin doble setup |
+| Google OAuth federation (AUTH-02 ex-v1) | Para "público abierto" requiere Google verification (3-10 días + privacy policy URL + screenshots), bloqueada por Phase 4 (Hosting) primero. Drop confirmado 2026-04-25 — email+password de Phase 2 cubre login. Reabrible post-v1 con verification completo. |
+| GitHub OAuth | Google ya cubre la mayoría de casos sin doble setup (Google también dropeado: ver fila anterior) |
 | Mobile app / PWA | Web-first; pivot mobile no aplica al formato datatón |
 | i18n / multi-idioma | Datatón en un solo idioma |
 | Analytics / observability | Post-MVP |
@@ -52,19 +52,18 @@ Qué phases cubren qué requirements.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
-| INFRA-02 | Phase 5 — Amplify Hosting + GitHub CI | Pending |
+| INFRA-02 | Phase 4 — Amplify Hosting + GitHub CI | Pending |
 | INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
-| AUTH-02 | Phase 3 — Google OAuth Federation | Pending |
 | AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
-| AUTH-04 | Phase 4 — Protected Route & Auth Guard | Pending |
+| AUTH-04 | Phase 3 — Protected Route & Auth Guard | Pending |
 | AUTH-05 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 
 **Coverage:**
-- v1 requirements: 8 total
-- Mapped to phases: 8
+- v1 requirements: 7 total (AUTH-02 dropped 2026-04-25 → Out of Scope)
+- Mapped to phases: 7
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-25*
-*Last updated: 2026-04-24 — traceability table populated after roadmap creation*
+*Last updated: 2026-04-25 — AUTH-02 (Google OAuth) dropeado; Phase 3/4 renumeradas tras remoción de Google OAuth Federation*

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Camino desde el scaffold actual de Next.js 16 hasta una base desplegada en AWS con autenticación funcional, lista para que el día del datatón el tiempo se gaste en construir la solución del reto, no en infraestructura. Cinco fases secuenciales: primero saneamos el scaffold y plantamos el backend Amplify Gen2, luego habilitamos auth por email, después federamos Google, después protegemos la primera ruta, y finalmente conectamos Amplify Hosting con CI desde GitHub.
+Camino desde el scaffold actual de Next.js 16 hasta una base desplegada en AWS con autenticación funcional, lista para que el día del datatón el tiempo se gaste en construir la solución del reto, no en infraestructura. Cuatro fases secuenciales: primero saneamos el scaffold y plantamos el backend Amplify Gen2, luego habilitamos auth por email, después protegemos la primera ruta, y finalmente conectamos Amplify Hosting con CI desde GitHub.
 
 ## Phases
 
@@ -14,9 +14,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation & Amplify Backend Skeleton** - Scaffold sano (sin CVE) y backend Amplify Gen2 desplegable a sandbox vacío
 - [ ] **Phase 2: Email/Password Auth + Authenticator UI** - Cognito User Pool + `<Authenticator>` integrado con sesión persistente
-- [ ] **Phase 3: Google OAuth Federation** - Login con Google funcionando vía federación Cognito
-- [ ] **Phase 4: Protected Route & Auth Guard** - Ruta `/app` que sólo es accesible logged in
-- [ ] **Phase 5: Amplify Hosting + GitHub CI** - Despliegue continuo desde `main` a Amplify Hosting
+- [ ] **Phase 3: Protected Route & Auth Guard** - Ruta `/app` que sólo es accesible logged in
+- [ ] **Phase 4: Amplify Hosting + GitHub CI** - Despliegue continuo desde `main` a Amplify Hosting
 
 ## Phase Details
 
@@ -55,21 +54,9 @@ Plans:
 - [x] 02-05-PLAN.md — Wave E: Manual D-29 flows (sign-up + verify, sign-out/re-sign-in, refresh, reset password) + CONTEXT D-28 wording fix per L-3 (autonomous: false)
 **UI hint**: yes
 
-### Phase 3: Google OAuth Federation
-**Goal**: Un usuario puede pulsar "Sign in with Google" en la app y completar el login vía Cognito federation.
-**Depends on**: Phase 2
-**Requirements**: AUTH-02
-**Success Criteria** (what must be TRUE):
-  1. Existe un OAuth Client en Google Cloud con los redirect URIs de Cognito (sandbox y prod) registrados
-  2. Las credenciales (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`) viven en Amplify secrets, no en el repo
-  3. `amplify/auth/resource.ts` declara `externalProviders: { google: { ... } }` y se despliega al sandbox
-  4. El botón de Google aparece en `<Authenticator>` y completar el flujo deja al usuario con sesión activa en la app
-**Plans**: TBD
-**UI hint**: yes
-
-### Phase 4: Protected Route & Auth Guard
+### Phase 3: Protected Route & Auth Guard
 **Goal**: La ruta `/app` (o equivalente) es inaccesible sin sesión y muestra contenido específico cuando hay sesión.
-**Depends on**: Phase 3
+**Depends on**: Phase 2
 **Requirements**: AUTH-04
 **Success Criteria** (what must be TRUE):
   1. Visitar `/app` sin sesión redirige a la página de login (o renderiza `<Authenticator>` directamente)
@@ -78,31 +65,31 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 5: Amplify Hosting + GitHub CI
+### Phase 4: Amplify Hosting + GitHub CI
 **Goal**: Cada push a `main` en GitHub dispara un build en AWS Amplify Hosting que despliega la app + backend a producción automáticamente.
-**Depends on**: Phase 4
+**Depends on**: Phase 3
 **Requirements**: INFRA-02
 **Success Criteria** (what must be TRUE):
   1. La app Amplify está creada en AWS Console y conectada al repo de GitHub en la rama `main`
   2. Existe `amplify.yml` en el repo con los pasos de build correctos para Bun + Next.js 16 + backend Gen2
   3. Un push a `main` dispara un build verde y la URL pública sirve la app (login + protected route funcionan en prod)
-  4. La sesión de email/password y la federación con Google funcionan contra el backend de producción (no sólo sandbox)
+  4. La sesión de email/password funciona contra el backend de producción (no sólo sandbox)
 **Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
+Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
 | 2. Email/Password Auth + Authenticator UI | 5/5 | Ready to verify | 2026-04-25 |
-| 3. Google OAuth Federation | 0/TBD | Not started | - |
-| 4. Protected Route & Auth Guard | 0/TBD | Not started | - |
-| 5. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |
+| 3. Protected Route & Auth Guard | 0/TBD | Not started | - |
+| 4. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-04-24*
 *Phase 1 plans created: 2026-04-25*
 *Phase 2 plans created: 2026-04-25*
+*Phase 3 (Google OAuth Federation) removed: 2026-04-25 — see git log; AUTH-02 moved to Out of Scope. Phase 4 → 3, Phase 5 → 4.*
