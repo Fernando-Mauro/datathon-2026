@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. `bun run build` y `bun run lint` siguen pasando después de añadir Amplify
 **Plans**: 5 plans
 Plans:
-- [ ] 01-01-PLAN.md — Wave A: Close PostCSS CVE (`bun update postcss`) and harden `package.json` scripts (strict lint, typecheck, audit, clean)
+- [x] 01-01-PLAN.md — Wave A: Close PostCSS CVE (`bun update postcss`) and harden `package.json` scripts (strict lint, typecheck, audit, clean)
 - [ ] 01-02-PLAN.md — Wave B: Create `app/{error,loading,not-found}.tsx` boundaries (Next 16.2 `unstable_retry`), `.env.example`, and Amplify-aware `.gitignore`
 - [ ] 01-03-PLAN.md — Wave C: Manual Amplify Gen 2 install — devDeps + `amplify/{backend.ts,package.json,tsconfig.json}` + root tsconfig exclude
 - [ ] 01-04-PLAN.md — Wave D: Add README `## Setup` section (AWS CLI install, IAM, profile config, sandbox lifecycle)
@@ -90,7 +90,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Amplify Backend Skeleton | 0/5 | Planned | - |
+| 1. Foundation & Amplify Backend Skeleton | 1/5 | In progress | - |
 | 2. Email/Password Auth + Authenticator UI | 0/TBD | Not started | - |
 | 3. Google OAuth Federation | 0/TBD | Not started | - |
 | 4. Protected Route & Auth Guard | 0/TBD | Not started | - |
