@@ -62,7 +62,11 @@ Plans:
   1. Visitar `/app` sin sesión redirige a la página de login (o renderiza `<Authenticator>` directamente)
   2. Visitar `/app` con sesión activa muestra contenido protegido que incluye al menos el email del usuario
   3. El patrón de guard está reutilizable (HOC, layout, o middleware documentado) para proteger nuevas rutas en el futuro
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 03-01-PLAN.md — Wave 1: Foundation primitives (`safeFromPath.ts` + `<AuthGuard>` client component)
+- [ ] 03-02-PLAN.md — Wave 2: Wire into routes (`app/app/layout.tsx` + REPLACE `app/app/page.tsx` + MODIFY `app/login/page.tsx` with Suspense + safeFromPath consumer)
+- [ ] 03-03-PLAN.md — Wave 3: Full gauntlet + 4 manual flow walkthroughs (autonomous: false; user-verifies redirect, signed-in render, open-redirect rejection, build success)
 **UI hint**: yes
 
 ### Phase 4: Amplify Hosting + GitHub CI
