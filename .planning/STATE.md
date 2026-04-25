@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 01-02-PLAN.md (boundaries + .env.example + Amplify-aware .gitignore)
-last_updated: "2026-04-25T06:42:23.140Z"
+last_updated: "2026-04-25T13:23:51.831Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
-  percent: 40
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 1 (Foundation & Amplify Backend Skeleton) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
@@ -74,6 +74,7 @@ Recent decisions affecting current work:
 - Skipped app/global-error.tsx — out of scope per RESEARCH §4.d (root layout has no async work yet); root error.tsx is sufficient
 - Append-only .gitignore edit preserves existing 42 lines; !.env.example allow override placed AFTER .env* rule (last-match-wins gitignore semantics)
 - Amplify gitignore patterns at repo root (no amplify/ prefix) per G-8 — amplify_outputs.json lands at project root, not under amplify/
+- Audit ignore-list for 24 Amplify CLI build-tool transitive CVEs (handlebars, minimatch, immutable, yaml, fast-xml-parser, lodash, uuid, @smithy/config-resolver). PostCSS CVE GHSA-qx2v-qp2m-jg93 remains closed via overrides. User-approved deviation from PLAN 01-03 — see 01-03-SUMMARY.md.
 
 ### Pending Todos
 
