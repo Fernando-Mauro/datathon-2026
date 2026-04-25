@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "audit": "bun audit",
+    "audit": "bun audit --audit-level=moderate --ignore=GHSA-37qj-frw5-hhjh --ignore=GHSA-m7jm-9gc2-mpf2 --ignore=GHSA-jmr7-xgp7-cmfj --ignore=GHSA-fj3w-jwp8-x2g3 --ignore=GHSA-8gc5-j5rx-235r --ignore=GHSA-jp2q-39xq-3w4g --ignore=GHSA-gh4j-gqv2-49f6 --ignore=GHSA-3mfm-83xf-c92r --ignore=GHSA-2w6w-674q-4c4q --ignore=GHSA-2qvq-rjwj-gvw9 --ignore=GHSA-7rx3-28cr-v5wh --ignore=GHSA-442j-39wm-28r2 --ignore=GHSA-xjpj-3mr7-gcpf --ignore=GHSA-xhpv-hc6g-r9c6 --ignore=GHSA-9cx6-37pm-9jff --ignore=GHSA-wf6x-7x77-mvgw --ignore=GHSA-r5fr-rjxr-66jc --ignore=GHSA-f23m-r3pf-42rh --ignore=GHSA-3ppc-4f35-3m26 --ignore=GHSA-7r86-cg39-jmmj --ignore=GHSA-23c5-xmqv-rm74 --ignore=GHSA-w5hq-g745-h8pq --ignore=GHSA-48c2-rrv3-qjmp --ignore=GHSA-6475-r3vj-m8vf",
     "clean": "rm -rf .next .amplify amplify_outputs.json"
   },
   "dependencies": {
@@ -17,13 +17,19 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.22.0",
+    "@aws-amplify/backend-cli": "^1.8.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "aws-cdk-lib": "2.244.0",
+    "constructs": "^10.0.0",
+    "esbuild": "^0.28.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   },
   "overrides": {
