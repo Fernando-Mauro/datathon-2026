@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# amplify (per https://docs.amplify.aws — also matches the patterns
+# `npm create amplify@latest` would have written automatically)
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+amplify/node_modules
+
+# env (allow .env.example as the documented template)
+!.env.example
