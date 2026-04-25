@@ -71,13 +71,19 @@ Plans:
 
 ### Phase 03.1: Hey-banco design system + Variante A conversational HAVI (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
+**Goal**: Aplicar el design system 'hey, banco' al scaffold y construir la Variante A conversational sobre /app: HAVI chat como motor central + sub-screens + handoff humano + alert/success/warning cards + animaciones de transición. UX/visual replatform — sin nuevas requirements (regression manual de AUTH-01..05).
 **Depends on:** Phase 3
-**Plans:** 0 plans
-
+**Requirements**: (none — UX phase; regression coverage for AUTH-03/04/05 via M-1..M-5 manual flows)
+**Plans:** 8 plans
 Plans:
-- [ ] TBD (run /gsd-plan-phase 03.1 to break down)
+- [ ] 03.1-01-PLAN.md — Wave 1: Foundation — install motion@^12.38.0 + Geist→IBM Plex (`app/layout.tsx`) + globals.css @theme token system + HAVI ring CSS + keyframes
+- [ ] 03.1-02-PLAN.md — Wave 2: Authenticator theme — `app/_styles/amplifyTheme.ts` + `<Wordmark>` component + `/login` ThemeProvider wrap (preserves Suspense + safeFromPath)
+- [ ] 03.1-03-PLAN.md — Wave 1: Pure-TS data layer — `app/_data/{types,mock,format,patterns}.ts` (locked names + iu flags + catch-all-LAST)
+- [ ] 03.1-04-PLAN.md — Wave 3: Primitives + hook + template — HaviRing, Icon, PageTransition, AppHeader, Composer, TypingIndicator, SuggestionChips, ActionPill, BigActionButton + useChatPersistence + `app/app/template.tsx` MotionConfig + curated icon SVGs
+- [ ] 03.1-05-PLAN.md — Wave 4: Composition — Sparkline, BarChart, SnapshotCard, ActionCard, AlertCard, TransferCard, TransactionRow, MessagesList, ChatMessage discriminated renderer
+- [ ] 03.1-06-PLAN.md — Wave 5: Chat home REPLACE — `app/app/page.tsx` (greeting + persistence + pattern dispatch + Hub.listen sign-out clear) + SignOutButton restyle
+- [ ] 03.1-07-PLAN.md — Wave 6: Sub-routes — `/app/grafica/[categoria]`, `/app/movimientos`, `/app/comparativa`, `/app/agente` (Sofía connecting → connected stepper)
+- [ ] 03.1-08-PLAN.md — Wave 7: Close-out — public `/` restyle + Phase 1 gauntlet + 10 manual flows (M-1..M-10) + SUMMARY + STATE + ROADMAP + REQUIREMENTS update (autonomous: false)
 
 ### Phase 4: Amplify Hosting + GitHub CI
 **Goal**: Cada push a `main` en GitHub dispara un build en AWS Amplify Hosting que despliega la app + backend a producción automáticamente.
