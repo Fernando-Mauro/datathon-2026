@@ -1,8 +1,4 @@
 import { defineBackend } from "@aws-amplify/backend";
+import { auth } from "./auth/resource";
 
-/**
- * Phase 1: Bare backend skeleton — no resources yet.
- * Phase 2 will add auth (Cognito + email/password).
- * @see https://docs.amplify.aws/nextjs/build-a-backend/
- */
-defineBackend({});
+defineBackend({ auth });
