@@ -89,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
 | 2. Email/Password Auth + Authenticator UI | 5/5 | Ready to verify | 2026-04-25 |
-| 3. Protected Route & Auth Guard | 3/3 | Ready to verify | 2026-04-25 |
+| 3. Protected Route & Auth Guard | 3/3 | Complete    | 2026-04-25 |
 | 4. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |
 
 ---

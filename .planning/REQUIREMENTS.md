@@ -21,7 +21,7 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 **: Cognito User Pool con email + contraseña configurado declarativamente en `amplify/auth/resource.ts` vía `defineAuth({ loginWith: { email: true } })`
 - [x] **AUTH-03
 **: Componente `<Authenticator>` de `@aws-amplify/ui-react` integrado en Next.js — flujos de sign-up (con verificación email), sign-in, sign-out y reset password operativos
-- [ ] **AUTH-04**: Ruta protegida (ej. `/app` o `/dashboard`) que redirige a `/login` (o muestra `<Authenticator>`) cuando no hay sesión activa, y muestra contenido cuando sí
+- [x] **AUTH-04**: Ruta protegida (ej. `/app` o `/dashboard`) que redirige a `/login` (o muestra `<Authenticator>`) cuando no hay sesión activa, y muestra contenido cuando sí
 - [x] **AUTH-05
 **: Sesión persiste entre refrescos del browser (token storage gestionado por Amplify — comprobado en dev y en deploy)
 
@@ -56,7 +56,7 @@ Qué phases cubren qué requirements.
 | INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 | AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
-| AUTH-04 | Phase 3 — Protected Route & Auth Guard | Pending |
+| AUTH-04 | Phase 3 — Protected Route & Auth Guard | Complete |
 | AUTH-05 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 
 **Coverage:**
