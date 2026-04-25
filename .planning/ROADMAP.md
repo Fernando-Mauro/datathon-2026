@@ -29,7 +29,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Existe `amplify/backend.ts` con `defineBackend({})` (o un recurso vacío) y el directorio `amplify/` está versionado
   3. `npx ampx sandbox` arranca en local sin errores y crea el stack en CloudFormation
   4. `bun run build` y `bun run lint` siguen pasando después de añadir Amplify
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 01-01-PLAN.md — Wave A: Close PostCSS CVE (`bun update postcss`) and harden `package.json` scripts (strict lint, typecheck, audit, clean)
+- [ ] 01-02-PLAN.md — Wave B: Create `app/{error,loading,not-found}.tsx` boundaries (Next 16.2 `unstable_retry`), `.env.example`, and Amplify-aware `.gitignore`
+- [ ] 01-03-PLAN.md — Wave C: Manual Amplify Gen 2 install — devDeps + `amplify/{backend.ts,package.json,tsconfig.json}` + root tsconfig exclude
+- [ ] 01-04-PLAN.md — Wave D: Add README `## Setup` section (AWS CLI install, IAM, profile config, sandbox lifecycle)
+- [ ] 01-05-PLAN.md — Wave E: Manual gate + `npx ampx sandbox --once` smoke deploy to CloudFormation (autonomous: false; requires AWS account)
 
 ### Phase 2: Email/Password Auth + Authenticator UI
 **Goal**: Un usuario puede registrarse con email y contraseña, verificar el email, iniciar y cerrar sesión desde la app, y la sesión sobrevive a un refresco.
@@ -84,7 +90,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Amplify Backend Skeleton | 0/TBD | Not started | - |
+| 1. Foundation & Amplify Backend Skeleton | 0/5 | Planned | - |
 | 2. Email/Password Auth + Authenticator UI | 0/TBD | Not started | - |
 | 3. Google OAuth Federation | 0/TBD | Not started | - |
 | 4. Protected Route & Auth Guard | 0/TBD | Not started | - |
@@ -92,3 +98,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 ---
 *Roadmap created: 2026-04-24*
+*Phase 1 plans created: 2026-04-25*
