@@ -21,17 +21,18 @@ Llegar al día del datatón con login funcionando, base desplegada y pipeline de
 - ✓ Bun como package manager (lockfile `bun.lock` presente) — existing
 - ✓ Fuentes Geist (Sans + Mono) cargadas vía `next/font/google` — existing
 - ✓ Root layout + home page renderizan correctamente — existing
+- ✓ Backend Amplify Gen2 desplegable a sandbox — Validated en Phase 1
+- ✓ Vulnerabilidad PostCSS XSS resuelta — Validated en Phase 1
+- ✓ Cognito User Pool con email + contraseña — Validated en Phase 2
+- ✓ `<Authenticator>` integrado en Next.js (sign-up, sign-in, sign-out, reset password) — Validated en Phase 2
+- ✓ Sesión persiste entre refrescos (localStorage) — Validated en Phase 2
+- ✓ Página protegida `/app` con guard reusable — Validated en Phase 3 (`<AuthGuard>` + `app/app/layout.tsx` + safeFromPath open-redirect allowlist)
 
 ### Active
 
 <!-- Scope de v1.0. Building toward these. -->
 
-- [ ] Backend Amplify Gen2 inicializado y desplegable a sandbox
-- [ ] Cognito User Pool con email + contraseña
-- [ ] Componente `<Authenticator>` integrado en Next.js (sign-up, sign-in, sign-out, reset password)
-- [ ] Página protegida que sólo es accesible logged in (redirige a login si no hay sesión)
 - [ ] App desplegada en AWS Amplify Hosting con CI desde GitHub
-- [ ] Vulnerabilidad PostCSS XSS detectada por mapper resuelta (parche dependencias)
 
 ### Out of Scope
 
@@ -92,4 +93,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-25 — AUTH-02 (Google OAuth) dropeado a Out of Scope; Phase 3 (Google) eliminada y Phase 4/5 renumeradas a 3/4*
+*Last updated: 2026-04-25 — Phase 3 (Protected Route & Auth Guard) complete: AUTH-04 satisfied via `<AuthGuard>` + `app/app/layout.tsx` + safeFromPath. Solo queda Phase 4 (Hosting + CI) para v1.0.*
