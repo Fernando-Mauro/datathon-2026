@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 02-01-PLAN.md (Cognito User Pool resource declared + wired)
-last_updated: "2026-04-25T15:56:15.547Z"
+last_updated: "2026-04-25T16:01:51.593Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 10
-  completed_plans: 6
-  percent: 60
+  completed_plans: 7
+  percent: 70
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 2 (Email/Password Auth + Authenticator UI) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
@@ -83,6 +83,7 @@ Recent decisions affecting current work:
 - Phase 2 Plan 01: Used CDK property fullname (NOT name) per L-1 — maps to OIDC standard claim 'name' on the wire
 - Phase 2 Plan 01: Omitted passwordPolicy and userVerification — Cognito defaults already match D-19/D-20 (verified against installed @aws-amplify/auth-construct/lib/defaults.js + aws-cdk-lib/aws-cognito/lib/user-pool.js)
 - Phase 2 Plan 01: Dropped Phase 1 backend.ts JSDoc — 'bare skeleton' explanation no longer factually correct now that auth resource is wired (PATTERNS Option A)
+- Plan 02-02: aws-amplify@6.16.4 + @aws-amplify/ui-react@6.15.3 installed to dependencies (NOT devDeps). adapter-nextjs deferred to Phase 4 per RESEARCH key finding #3. Existing 24 audit ignores cover Amplify v6 transitives — no new ignores needed.
 
 ### Pending Todos
 
