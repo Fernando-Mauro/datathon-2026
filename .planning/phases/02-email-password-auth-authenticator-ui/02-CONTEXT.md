@@ -75,7 +75,8 @@ Levantar Cognito User Pool con email + password + atributo `name` declarativamen
 
 - **D-27:** Sign-out: botón en `app/app/page.tsx` que llama a `signOut()` de `aws-amplify/auth` y luego `router.push("/")` (vuelve a home pública). Claude's discretion en el placement visual.
 
-- **D-28:** Persistencia de sesión: Amplify default es localStorage (auto-rehidrata al refrescar). NO custom storage adapter en v1 — los tradeoffs XSS están aceptados como riesgo conocido del v1 (mitigation post-MVP).
+- **D-28:** Persistencia de sesión: tokens guardados en **localStorage** (Amplify default, auto-rehidrata al refrescar). NO custom storage adapter en v1 — los tradeoffs XSS están aceptados como riesgo conocido del v1 (mitigation post-MVP). **AUTH-05 cumplido** vía localStorage persistence (verificado D-29 #3 manual).
+  - **Evolución vs RESEARCH L-3:** RESEARCH L-3 inicialmente sugirió `Amplify.configure(outputs, { ssr: true })` (cookies) "REQUIRED para Next.js per official docs". En execution probamos `ssr: true` y rompió la inicialización: el cookie storage adapter cuelga sin `@aws-amplify/adapter-nextjs` instalado, dejando `useAuthenticator` colgado en `authStatus === "configuring"` para siempre. Walk-back a `Amplify.configure(outputs)` (sin `ssr: true`) — la wording original de D-28 (localStorage) era correcta. `ssr: true` solo aplica cuando hay server-side auth en route handlers / server actions, que es Phase 4+ territory y requiere instalar el adapter.
 
 ### Validation in Sandbox (D-29)
 

@@ -4,11 +4,15 @@ import { Amplify } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import outputs from "@/amplify_outputs.json";
 
-// `ssr: true` is REQUIRED for Next.js per official docs — switches token storage
-// to cookies so the session survives refresh. SUPERSEDES CONTEXT D-28 wording
-// (which assumed localStorage). See node_modules/next/dist/docs and
-// https://docs.amplify.aws/nextjs/build-a-backend/server-side-rendering/
-Amplify.configure(outputs, { ssr: true });
+// Default browser storage (localStorage) — no `ssr: true`. The `ssr` flag is for
+// Amplify Gen2 setups that ALSO need server-side auth in route handlers / server
+// actions, which requires `@aws-amplify/adapter-nextjs` (deferred to Phase 4 if
+// ever needed). For purely client-side `<Authenticator>`, `ssr: true` causes the
+// cookie storage adapter to hang server-side without the adapter installed,
+// leaving `useAuthenticator` stuck on `authStatus === "configuring"`. This walks
+// back RESEARCH L-3 — the original CONTEXT D-28 (localStorage) was correct.
+// AUTH-05 (refresh persistence) is satisfied: localStorage survives page reload.
+Amplify.configure(outputs);
 
 export function AmplifyProvider({ children }: { children: React.ReactNode }) {
   // Authenticator.Provider is required so useAuthenticator() can be called
