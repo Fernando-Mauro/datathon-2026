@@ -103,7 +103,10 @@ export default function ChatHome() {
 
   return (
     <div className="flex min-h-screen flex-col bg-hey-bg">
-      <AppHeader trailing={<SignOutButton variant="icon" />} />
+      {/* Mobile-only header — desktop uses SideRail (template.tsx) for chrome. */}
+      <div className="lg:hidden">
+        <AppHeader trailing={<SignOutButton variant="icon" />} />
+      </div>
       <MessagesList messages={messages} typing={typing} />
       <SuggestionChips suggestions={SUGGESTIONS} onPick={send} />
       <Composer onSend={send} />

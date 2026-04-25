@@ -131,12 +131,18 @@
   }
 }
 
-/* App frame container — caps the chat shell at 420px on desktop while remaining
- * full-width on mobile. */
+/* App frame container — mobile-first 420px center. At ≥1024px (lg breakpoint),
+ * the desktop shell (SideRail + ContextPane) wraps content; the chat column
+ * breathes wider but stays bounded so reading width doesn't blow out. */
 .hey-app-frame {
   max-width: var(--hey-app-width);
   margin-inline: auto;
   width: 100%;
+}
+@media (min-width: 1024px) {
+  .hey-app-frame {
+    max-width: 720px;
+  }
 }
 
 /* Type-ramp shorthands for high-recurrence patterns (amounts use serif tabular,
