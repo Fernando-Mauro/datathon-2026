@@ -64,7 +64,7 @@ Plans:
   3. El patrón de guard está reutilizable (HOC, layout, o middleware documentado) para proteger nuevas rutas en el futuro
 **Plans**: 3 plans
 Plans:
-- [ ] 03-01-PLAN.md — Wave 1: Foundation primitives (`safeFromPath.ts` + `<AuthGuard>` client component)
+- [x] 03-01-PLAN.md — Wave 1: Foundation primitives (`safeFromPath.ts` + `<AuthGuard>` client component)
 - [ ] 03-02-PLAN.md — Wave 2: Wire into routes (`app/app/layout.tsx` + REPLACE `app/app/page.tsx` + MODIFY `app/login/page.tsx` with Suspense + safeFromPath consumer)
 - [ ] 03-03-PLAN.md — Wave 3: Full gauntlet + 4 manual flow walkthroughs (autonomous: false; user-verifies redirect, signed-in render, open-redirect rejection, build success)
 **UI hint**: yes
