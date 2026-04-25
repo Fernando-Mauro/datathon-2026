@@ -1,72 +1,43 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { Wordmark } from "./_components/Wordmark";
+import { HaviRing } from "./_components/HaviRing";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <Link
-        href="/login"
-        className="absolute top-4 right-4 rounded-md border border-foreground/20 px-3 py-1.5 text-sm hover:bg-foreground/5"
-      >
-        Sign in
-      </Link>
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex min-h-screen flex-col bg-hey-bg text-hey-fg-1">
+      <header className="hey-app-frame flex h-14 items-center justify-between px-4">
+        <Wordmark size="md" />
+        <Link
+          href="/login"
+          className="rounded-hey-pill border border-hey-outline px-4 py-1.5 text-[13px] font-medium text-hey-fg-1 transition hover:border-hey-blue hover:text-hey-blue active:opacity-60"
+        >
+          Iniciar sesión
+        </Link>
+      </header>
+
+      <main className="hey-app-frame flex flex-1 flex-col items-center justify-center gap-8 px-6 py-16 text-center">
+        <HaviRing size={96} />
+        <div className="flex flex-col gap-3">
+          <h1 className="font-serif text-[36px] font-semibold leading-tight text-hey-fg-1">
+            Tu copiloto financiero, en una conversación.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-[15px] leading-snug text-hey-fg-2">
+            Pregúntale a HAVI cuánto gastaste, paga tu tarjeta o revisa tus metas — sin menús, sin fricción.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        <Link
+          href="/login"
+          className="inline-flex items-center gap-2 rounded-hey-pill bg-hey-blue px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-hey-blue-hover active:bg-hey-blue-press"
+        >
+          Entrar
+          <ArrowRight size={16} strokeWidth={2.4} />
+        </Link>
       </main>
+
+      <footer className="hey-app-frame px-4 py-6 text-center text-[11px] text-hey-fg-3">
+        datatón 2026 — demo conversacional inspirada en hey banco
+      </footer>
     </div>
   );
 }

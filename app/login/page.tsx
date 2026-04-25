@@ -2,8 +2,10 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import { Authenticator, ThemeProvider, useAuthenticator } from "@aws-amplify/ui-react";
 import { safeFromPath } from "@/app/_components/safeFromPath";
+import { Wordmark } from "@/app/_components/Wordmark";
+import { heyAmplifyTheme } from "@/app/_styles/amplifyTheme";
 
 function LoginPageInner() {
   const router = useRouter();
@@ -18,28 +20,34 @@ function LoginPageInner() {
   }, [authStatus, router, searchParams]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center p-8">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-hey-bg p-8">
+      <Wordmark size="lg" />
       {authStatus === "configuring" && (
-        <p className="text-sm opacity-70">Loading…</p>
+        <p className="text-sm text-hey-fg-2">Cargando…</p>
       )}
-      {authStatus !== "authenticated" && <Authenticator />}
+      {authStatus !== "authenticated" && (
+        <div className="hey-app-frame">
+          <Authenticator />
+        </div>
+      )}
     </main>
   );
 }
 
 export default function LoginPage() {
-  // <Suspense> is mandatory because LoginPageInner uses useSearchParams (K-3 / L-1).
-  // Without this boundary, `bun run build` fails with
-  // "Missing Suspense boundary with useSearchParams".
+  // <Suspense> mandatory — LoginPageInner uses useSearchParams (K-3 / L-1).
+  // Without this boundary, `bun run build` fails.
   return (
-    <Suspense
-      fallback={
-        <main className="flex min-h-screen items-center justify-center p-8">
-          <p className="text-sm opacity-70">Loading…</p>
-        </main>
-      }
-    >
-      <LoginPageInner />
-    </Suspense>
+    <ThemeProvider theme={heyAmplifyTheme} colorMode="dark">
+      <Suspense
+        fallback={
+          <main className="flex min-h-screen items-center justify-center bg-hey-bg p-8">
+            <p className="text-sm text-hey-fg-2">Cargando…</p>
+          </main>
+        }
+      >
+        <LoginPageInner />
+      </Suspense>
+    </ThemeProvider>
   );
 }
