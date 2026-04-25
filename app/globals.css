@@ -160,4 +160,14 @@
     font-weight: 500;
     color: var(--color-hey-fg-2);
   }
+  /* Hide scrollbar but keep scroll behavior — used on the suggestion chips
+   * row above the composer (mobile horizontal swipe / desktop wheel scroll). */
+  .hey-scroll-x-hidden {
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / old Edge */
+  }
+  .hey-scroll-x-hidden::-webkit-scrollbar {
+    display: none; /* Chromium / Safari */
+  }
 }
