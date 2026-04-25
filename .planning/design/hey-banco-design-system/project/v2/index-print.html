@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>hey, v2 — UX replanteado (PDF)</title>
+<link rel="stylesheet" href="../colors_and_type.css"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #050505;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @keyframes haviSpin { to { transform: rotate(360deg); } }
+  *::-webkit-scrollbar { width: 0; height: 0; }
+
+  .print-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 32px 40px 28px;
+    display: flex;
+    flex-direction: column;
+    page-break-after: avoid;
+  }
+  .header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .header .meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.04em;
+  }
+  .variants {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+    justify-items: center;
+  }
+  .variant {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    break-inside: avoid;
+  }
+  .variant .label-block {
+    text-align: center;
+    max-width: 360px;
+  }
+  .variant .eyebrow {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+  }
+  .variant .title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+  }
+  .variant .desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  .phone-mount {
+    /* Scale the 390x844 phone down to fit the print column */
+    transform: scale(0.62);
+    transform-origin: top center;
+    width: 390px;
+    height: 844px;
+  }
+  .phone-slot {
+    height: calc(844px * 0.62);
+    width: calc(390px * 0.62 + 16px);
+  }
+
+  @page {
+    size: landscape;
+    margin: 0.4cm;
+  }
+  @media print {
+    html, body { background: #050505; }
+    .print-page { min-height: auto; padding: 18px 22px; }
+    .variants { gap: 36px; }
+    .phone-mount { transform: scale(0.55); }
+    .phone-slot { height: calc(844px * 0.55); width: calc(390px * 0.55 + 16px); }
+    .header { margin-bottom: 18px; padding-bottom: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-page">
+  <div class="header">
+    <h1>hey, v2 — replanteo UX/UI</h1>
+    <span class="meta">HAVI como motor central · Modo foco</span>
+  </div>
+
+  <div class="variants">
+    <div class="variant">
+      <div class="label-block">
+        <div class="eyebrow">Variante A</div>
+        <div class="title">Conversacional</div>
+        <div class="desc">HAVI es la home. La conversación es la navegación principal — saldo, gasto y acciones aparecen como tarjetas dentro del chat.</div>
+      </div>
+      <div class="phone-slot">
+        <div class="phone-mount" id="mount-a"></div>
+      </div>
+    </div>
+
+    <div class="variant">
+      <div class="label-block">
+        <div class="eyebrow">Variante B</div>
+        <div class="title">Modo foco</div>
+        <div class="desc">Una pregunta a la vez. El gasto de la semana es el héroe. HAVI flota abajo como punto único de acceso.</div>
+      </div>
+      <div class="phone-slot">
+        <div class="phone-mount" id="mount-b"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="VariantA.jsx"></script>
+<script type="text/babel" src="VariantB.jsx"></script>
+
+<script type="text/babel">
+  function Phone({ children }) {
+    return (
+      <IOSDevice width={390} height={844} dark={true}>
+        {children}
+      </IOSDevice>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("mount-a")).render(<Phone><VariantA/></Phone>);
+  ReactDOM.createRoot(document.getElementById("mount-b")).render(<Phone><VariantB/></Phone>);
+
+  // Auto-print after fonts and JSX are ready
+  (async () => {
+    try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+    setTimeout(() => { window.print(); }, 800);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* ============================================================
+   hey banco — Design Tokens
+   Foundational CSS variables for color, type, spacing, radii.
+   Import this file in any HTML that uses the hey design system.
+   ============================================================ */
+
+/* Webfont — Inter as substitute for the brand sans.
+   FLAG: replace with the real brand font when available. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ----------------------------------------------------------
+     COLORS — neutrals
+     ---------------------------------------------------------- */
+  --hey-black:        #000000;  /* page canvas */
+  --hey-bg:           #000000;  /* alias */
+  --hey-surface-1:    #0E0E0E;  /* lifted surface (header, footer) */
+  --hey-surface-2:    #1A1A1A;  /* cards, chat bubbles, composer */
+  --hey-surface-3:    #1F1F1F;  /* pressed row state */
+  --hey-divider:      rgba(255, 255, 255, 0.08);  /* hairline */
+  --hey-outline:      rgba(255, 255, 255, 0.16);  /* form input border */
+
+  /* COLORS — text */
+  --hey-fg-1:         #FFFFFF;          /* primary text */
+  --hey-fg-2:         rgba(255,255,255,0.60);  /* secondary text */
+  --hey-fg-3:         rgba(255,255,255,0.40);  /* tertiary / placeholder */
+  --hey-fg-disabled:  rgba(255,255,255,0.24);
+
+  /* COLORS — primary action (electric blue) */
+  --hey-blue:         #3478F6;
+  --hey-blue-hover:   #2C6AE0;
+  --hey-blue-press:   #245BC2;
+  --hey-blue-bg:      #2D6FF0;  /* the validation banner */
+  --hey-link:         #4A90FF;
+
+  /* COLORS — accent chip palette (used as 16%-opacity fills behind icons)
+     Each pair: --hey-accent-X (full) and --hey-accent-X-bg (chip surface) */
+  --hey-accent-purple:    #B084FF;
+  --hey-accent-purple-bg: rgba(176, 132, 255, 0.16);
+
+  --hey-accent-amber:     #FFB547;
+  --hey-accent-amber-bg:  rgba(255, 181, 71, 0.16);
+
+  --hey-accent-magenta:   #FF6FD3;
+  --hey-accent-magenta-bg: rgba(255, 111, 211, 0.16);
+
+  --hey-accent-cyan:      #4FD8E0;
+  --hey-accent-cyan-bg:   rgba(79, 216, 224, 0.16);
+
+  --hey-accent-sky:       #5AB6FF;
+  --hey-accent-sky-bg:    rgba(90, 182, 255, 0.16);
+
+  --hey-accent-green:     #4FE5A1;
+  --hey-accent-green-bg:  rgba(79, 229, 161, 0.16);
+
+  /* COLORS — semantic */
+  --hey-success:      #4FE5A1;
+  --hey-warning:      #FFB547;
+  --hey-error:        #FF5D5D;
+  --hey-info:         #5AB6FF;
+
+  /* COLORS — HAVI signature gradient (conic spectrum) */
+  --hey-havi-grad: conic-gradient(
+    from 0deg,
+    #FF3D5A 0deg,
+    #FF8A3D 50deg,
+    #FFD93D 100deg,
+    #4FE56F 160deg,
+    #4FD8E0 220deg,
+    #3478F6 280deg,
+    #B084FF 320deg,
+    #FF3D5A 360deg
+  );
+
+  /* Modal scrim */
+  --hey-scrim:        rgba(0, 0, 0, 0.60);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY
+     ---------------------------------------------------------- */
+  --hey-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, "Helvetica Neue", Arial, sans-serif;
+  --hey-font-display: var(--hey-font-sans);
+  --hey-font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+
+  /* Weights */
+  --hey-w-regular: 400;
+  --hey-w-medium:  500;
+  --hey-w-semibold: 600;
+  --hey-w-bold:    700;
+  --hey-w-black:   800;
+
+  /* Type scale — mobile-tuned */
+  --hey-text-12: 12px;
+  --hey-text-13: 13px;
+  --hey-text-14: 14px;
+  --hey-text-15: 15px;  /* body default */
+  --hey-text-16: 16px;
+  --hey-text-17: 17px;  /* section header */
+  --hey-text-18: 18px;
+  --hey-text-22: 22px;
+  --hey-text-28: 28px;
+  --hey-text-34: 34px;  /* large display / amounts */
+
+  /* Line heights */
+  --hey-lh-tight:   1.15;
+  --hey-lh-snug:    1.30;
+  --hey-lh-normal:  1.45;
+  --hey-lh-relaxed: 1.60;
+
+  /* Letter spacing */
+  --hey-tracking-tight:  -0.02em;
+  --hey-tracking-normal: 0;
+  --hey-tracking-wide:   0.04em;
+  --hey-tracking-caps:   0.08em;
+
+  /* ----------------------------------------------------------
+     SPACING — 4px base grid
+     ---------------------------------------------------------- */
+  --hey-space-1:  4px;
+  --hey-space-2:  8px;
+  --hey-space-3:  12px;
+  --hey-space-4:  16px;
+  --hey-space-5:  20px;
+  --hey-space-6:  24px;
+  --hey-space-8:  32px;
+  --hey-space-10: 40px;
+  --hey-space-12: 48px;
+  --hey-space-16: 64px;
+
+  /* ----------------------------------------------------------
+     RADII
+     ---------------------------------------------------------- */
+  --hey-radius-0:    0px;
+  --hey-radius-sm:   8px;    /* small buttons, badges */
+  --hey-radius-md:   12px;   /* chat bubbles */
+  --hey-radius-lg:   16px;   /* sheets */
+  --hey-radius-pill: 999px;  /* pill buttons, banner, input */
+  --hey-radius-full: 50%;    /* icon chips, avatar, HAVI core */
+
+  /* ----------------------------------------------------------
+     ELEVATION (intentionally minimal — flat dark UI)
+     ---------------------------------------------------------- */
+  --hey-shadow-none: none;
+  --hey-shadow-sheet: 0 -8px 32px rgba(0, 0, 0, 0.50);  /* bottom sheets */
+  --hey-shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.60);
+
+  /* ----------------------------------------------------------
+     LAYOUT
+     ---------------------------------------------------------- */
+  --hey-app-width: 390px;        /* iPhone reference width */
+  --hey-header-h: 56px;
+  --hey-tabbar-h: 80px;
+  --hey-content-pad: 20px;
+
+  /* Motion */
+  --hey-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --hey-dur-fast:   150ms;
+  --hey-dur-normal: 250ms;
+  --hey-dur-slow:   400ms;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Drop into any hey-themed surface by adding `.hey` to <body>
+   or any container. Otherwise, use the variables directly.
+   ============================================================ */
+
+.hey,
+.hey * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.hey {
+  background: var(--hey-bg);
+  color: var(--hey-fg-1);
+  font-family: var(--hey-font-sans);
+  font-size: var(--hey-text-15);
+  line-height: var(--hey-lh-normal);
+  letter-spacing: var(--hey-tracking-normal);
+}
+
+.hey h1, .hey .hey-h1 {
+  font-size: var(--hey-text-28);
+  font-weight: var(--hey-w-bold);
+  line-height: var(--hey-lh-tight);
+  letter-spacing: var(--hey-tracking-tight);
+  margin: 0;
+}
+
+.hey h2, .hey .hey-h2 {
+  font-size: var(--hey-text-22);
+  font-weight: var(--hey-w-bold);
+  line-height: var(--hey-lh-snug);
+  letter-spacing: var(--hey-tracking-tight);
+  margin: 0;
+}
+
+.hey h3, .hey .hey-h3 {
+  /* Section headers in product e.g. "Mis productos contratados" */
+  font-size: var(--hey-text-17);
+  font-weight: var(--hey-w-bold);
+  line-height: var(--hey-lh-snug);
+  margin: 0;
+}
+
+.hey h4, .hey .hey-h4 {
+  font-size: var(--hey-text-15);
+  font-weight: var(--hey-w-semibold);
+  line-height: var(--hey-lh-snug);
+  margin: 0;
+}
+
+.hey p, .hey .hey-body {
+  font-size: var(--hey-text-15);
+  font-weight: var(--hey-w-regular);
+  line-height: var(--hey-lh-normal);
+  color: var(--hey-fg-1);
+  margin: 0;
+}
+
+.hey .hey-body-sm,
+.hey small {
+  font-size: var(--hey-text-13);
+  color: var(--hey-fg-2);
+  line-height: var(--hey-lh-normal);
+}
+
+.hey .hey-meta {
+  font-size: var(--hey-text-12);
+  color: var(--hey-fg-2);
+  letter-spacing: var(--hey-tracking-wide);
+}
+
+.hey .hey-amount {
+  font-size: var(--hey-text-22);
+  font-weight: var(--hey-w-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--hey-tracking-tight);
+}
+
+.hey .hey-link,
+.hey a {
+  color: var(--hey-blue);
+  text-decoration: none;
+  font-weight: var(--hey-w-medium);
+}
+
+.hey .hey-wordmark {
+  font-family: var(--hey-font-display);
+  font-weight: var(--hey-w-black);
+  font-size: var(--hey-text-22);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.hey code, .hey .hey-mono {
+  font-family: var(--hey-font-mono);
+  font-size: 0.92em;
+}

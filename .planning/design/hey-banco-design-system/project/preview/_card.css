@@ -1,0 +1,51 @@
+/* Shared styles for design-system preview cards */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #0A0A0A;
+  font-family: var(--hey-font-sans);
+  color: var(--hey-fg-1);
+  min-height: 100vh;
+}
+
+body {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 660px;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.swatch-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.swatch {
+  flex: 1;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.swatch-fill {
+  height: 56px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.swatch-name { font-size: 11px; font-weight: 600; color: #fff; }
+.swatch-hex { font-size: 10px; color: rgba(255,255,255,0.5); font-family: ui-monospace, Menlo, monospace; }

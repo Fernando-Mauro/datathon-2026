@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>hey banco — Mobile UI Kit</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #1a1a1a, #000 70%);
+    font-family: "Inter", system-ui, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 20px;
+    gap: 24px;
+  }
+  .stage {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .meta { text-align: center; max-width: 480px; }
+  .meta h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.04em; margin: 0; }
+  .meta p { color: rgba(255,255,255,0.6); font-size: 14px; line-height: 1.5; margin: 8px 0 0; }
+  @keyframes haviSpin { to { transform: rotate(360deg); } }
+  /* Hide scrollbars in screen content for a cleaner look */
+  *::-webkit-scrollbar { width: 0; height: 0; }
+</style>
+</head>
+<body>
+
+<div class="meta">
+  <h1>hey, — Mobile UI Kit</h1>
+  <p>Click any tab. Tap a product to see its detail screen, tap HAVI for the chat, or use the navigation icons. All flows are real React state — type into HAVI to get a reply.</p>
+</div>
+
+<div class="stage" id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="HaviScreen.jsx"></script>
+<script type="text/babel" src="ProductDetailScreen.jsx"></script>
+<script type="text/babel" src="TransferScreen.jsx"></script>
+<script type="text/babel" src="InboxScreen.jsx"></script>
+
+<script type="text/babel">
+  const { useState } = React;
+
+  function App() {
+    // Navigation stack: each entry is { screen: 'home'|'havi'|'product'|'transfer'|'inbox', payload?: any }
+    const [stack, setStack] = useState([{ screen: "home" }]);
+    const [activeTab, setActiveTab] = useState("inicio");
+    const top = stack[stack.length - 1];
+
+    const push = (entry) => setStack(s => [...s, entry]);
+    const pop  = () => setStack(s => s.length > 1 ? s.slice(0, -1) : s);
+    const reset = (entry) => setStack([entry]);
+
+    const handleTabChange = (id) => {
+      setActiveTab(id);
+      if (id === "inicio")     reset({ screen: "home" });
+      else if (id === "transferir") reset({ screen: "transfer" });
+      else if (id === "buzon")      reset({ screen: "inbox" });
+      else if (id === "pagos")      reset({ screen: "product", payload: "tdc" });
+    };
+
+    const renderScreen = () => {
+      switch (top.screen) {
+        case "home":
+          return <HomeScreen
+            name="Fernando"
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
+            onOpenProduct={(p) => push({ screen: "product", payload: p })}
+            onOpenHavi={() => push({ screen: "havi" })}
+          />;
+        case "havi":
+          return <HaviScreen onBack={pop}/>;
+        case "product":
+          return <ProductDetailScreen product={top.payload} onBack={pop}/>;
+        case "transfer":
+          return <TransferScreen onBack={() => { setActiveTab("inicio"); reset({ screen: "home" }); }}/>;
+        case "inbox":
+          return <InboxScreen onBack={() => { setActiveTab("inicio"); reset({ screen: "home" }); }}/>;
+        default: return null;
+      }
+    };
+
+    // Wrap non-home screens with a tab bar so navigation feels persistent
+    const showTabBar = top.screen !== "havi" && top.screen !== "product";
+    return (
+      <IOSDevice width={390} height={844} dark={true}>
+        <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "#000", paddingTop: 50 }}>
+          <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+            {top.screen === "home" ? (
+              renderScreen()
+            ) : (
+              <>
+                <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>{renderScreen()}</div>
+                {showTabBar && (
+                  <TabBar
+                    active={activeTab}
+                    onChange={handleTabChange}
+                    badges={{ buzon: 2 }}
+                  />
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </IOSDevice>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+
+</body>
+</html>

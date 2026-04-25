@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>hey banco — Mobile UI Kit (print)</title>
+<link rel="stylesheet" href="../../colors_and_type.css"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #000;
+    font-family: "Inter", system-ui, sans-serif;
+    color: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @keyframes haviSpin { to { transform: rotate(360deg); } }
+  *::-webkit-scrollbar { width: 0; height: 0; }
+
+  .page {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 28px 36px;
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    break-after: page;
+    page-break-after: always;
+  }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+
+  .page-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 20px; flex: none;
+  }
+  .page-head .title { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; }
+  .page-head .sub { color: rgba(255,255,255,0.6); font-size: 12px; }
+
+  .row {
+    display: flex; gap: 24px; flex: 1; align-items: stretch; justify-content: center;
+  }
+
+  .screen-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    flex: 1; min-width: 0;
+  }
+  .screen-wrap .label {
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;
+  }
+  .screen-wrap .desc {
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    text-align: center; line-height: 1.4; max-width: 260px;
+  }
+
+  /* Override iOS frame default shadow for cleaner print */
+  .screen-wrap .ios-device {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12) !important;
+    transform: scale(0.78);
+    transform-origin: top center;
+    margin-bottom: -180px; /* pull up to compensate for scale */
+  }
+
+  @page { size: landscape; margin: 0.4cm; }
+
+  @media print {
+    html, body { background: #000 !important; }
+    .page { min-height: 0; height: 100vh; }
+  }
+
+  .cover {
+    background: #000;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start;
+    padding: 60px 80px;
+  }
+  .cover .wordmark { font-size: 120px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; }
+  .cover .system { font-size: 28px; font-weight: 600; color: rgba(255,255,255,0.6); margin-top: 12px; }
+  .cover .desc { font-size: 16px; color: rgba(255,255,255,0.5); margin-top: 32px; max-width: 540px; line-height: 1.55; }
+  .cover .havi {
+    position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+    width: 220px; height: 220px;
+  }
+  .cover .havi-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0deg, #FF3D5A 0deg, #FF8A3D 50deg, #FFD93D 100deg, #4FE56F 160deg, #4FD8E0 220deg, #3478F6 280deg, #B084FF 320deg, #FF3D5A 360deg);
+  }
+  .cover .havi-core {
+    position: absolute; inset: 18px; border-radius: 50%; background: #000;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 800; font-size: 38px; letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────────────── COVER ───────────────────── -->
+<section class="page cover" style="position:relative;">
+  <div class="wordmark">hey,</div>
+  <div class="system">Mobile UI Kit</div>
+  <div class="desc">A high-fidelity recreation of the hey banco mobile app — five screens demonstrating the visual system: pitch-black canvas, electric-blue primary, tinted icon chips, and the signature HAVI ring.</div>
+  <div class="havi">
+    <div class="havi-ring"></div>
+    <div class="havi-core">HAVI</div>
+  </div>
+</section>
+
+<!-- ───────────────────── PAGE 1 ───────────────────── -->
+<section class="page">
+  <div class="page-head">
+    <div class="title">Home + HAVI</div>
+    <div class="sub">Dashboard · AI assistant chat</div>
+  </div>
+  <div class="row">
+    <div class="screen-wrap">
+      <div class="label">01 · Inicio</div>
+      <div id="screen-home"></div>
+      <div class="desc">Greeting + promo banner + contracted &amp; available products.</div>
+    </div>
+    <div class="screen-wrap">
+      <div class="label">02 · HAVI</div>
+      <div id="screen-havi"></div>
+      <div class="desc">Conversational assistant. Pill composer with mic.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────── PAGE 2 ───────────────────── -->
+<section class="page">
+  <div class="page-head">
+    <div class="title">Money movement</div>
+    <div class="sub">Transfer flow · product detail</div>
+  </div>
+  <div class="row">
+    <div class="screen-wrap">
+      <div class="label">03 · Transferir</div>
+      <div id="screen-transfer"></div>
+      <div class="desc">Tabs, search, quick actions, frequent contacts.</div>
+    </div>
+    <div class="screen-wrap">
+      <div class="label">04 · Crédito personal</div>
+      <div id="screen-product"></div>
+      <div class="desc">Generic product detail with primary CTA.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────── PAGE 3 ───────────────────── -->
+<section class="page">
+  <div class="page-head">
+    <div class="title">Inbox</div>
+    <div class="sub">Buzón · message list with unread indicators</div>
+  </div>
+  <div class="row">
+    <div class="screen-wrap">
+      <div class="label">05 · Buzón</div>
+      <div id="screen-inbox"></div>
+      <div class="desc">Tinted icon chip per category, blue dot for unread, two-line preview.</div>
+    </div>
+    <div class="screen-wrap" style="justify-content:center; max-width: 380px;">
+      <div class="label" style="margin-bottom:14px;">Visual rules</div>
+      <ul style="font-size:13px; color:rgba(255,255,255,0.75); line-height:1.7; padding-left:20px; margin:0;">
+        <li>Pitch-black canvas, no gradients except HAVI</li>
+        <li>Spanish (Mexican) tú-form copy, no emoji</li>
+        <li>Wordmark always lowercase with comma</li>
+        <li>40–48px icon chips, 16% tint, stroke glyph</li>
+        <li>Pill buttons for primary actions</li>
+        <li>Flat — no shadows, depth via tint shifts</li>
+        <li>HAVI ring: only conic gradient in the system</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="HaviScreen.jsx"></script>
+<script type="text/babel" src="ProductDetailScreen.jsx"></script>
+<script type="text/babel" src="TransferScreen.jsx"></script>
+<script type="text/babel" src="InboxScreen.jsx"></script>
+
+<script type="text/babel">
+  function StaticFrame({ children }) {
+    return (
+      <div className="ios-device">
+        <IOSDevice width={360} height={780} dark={true}>
+          <div style={{ height: "100%", display: "flex", flexDirection: "column", background: "#000", paddingTop: 50 }}>
+            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+              {children}
+            </div>
+          </div>
+        </IOSDevice>
+      </div>
+    );
+  }
+
+  function HomeWithTabs() {
+    return (
+      <>
+        <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+          <HomeScreen
+            name="Fernando"
+            activeTab="inicio"
+            onTabChange={() => {}}
+            onOpenProduct={() => {}}
+            onOpenHavi={() => {}}
+          />
+        </div>
+      </>
+    );
+  }
+
+  function TransferWithTabs() {
+    return (
+      <>
+        <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+          <TransferScreen onBack={() => {}}/>
+        </div>
+        <TabBar active="transferir" onChange={() => {}} badges={{ buzon: 2 }}/>
+      </>
+    );
+  }
+
+  function InboxWithTabs() {
+    return (
+      <>
+        <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+          <InboxScreen onBack={() => {}}/>
+        </div>
+        <TabBar active="buzon" onChange={() => {}} badges={{ buzon: 2 }}/>
+      </>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("screen-home")).render(<StaticFrame><HomeWithTabs/></StaticFrame>);
+  ReactDOM.createRoot(document.getElementById("screen-havi")).render(<StaticFrame><HaviScreen onBack={() => {}}/></StaticFrame>);
+  ReactDOM.createRoot(document.getElementById("screen-transfer")).render(<StaticFrame><TransferWithTabs/></StaticFrame>);
+  ReactDOM.createRoot(document.getElementById("screen-product")).render(<StaticFrame><ProductDetailScreen product="credito-personal" onBack={() => {}}/></StaticFrame>);
+  ReactDOM.createRoot(document.getElementById("screen-inbox")).render(<StaticFrame><InboxWithTabs/></StaticFrame>);
+
+  // Auto-print: wait for fonts + JSX + a buffer
+  (async () => {
+    try { await document.fonts.ready; } catch (e) {}
+    setTimeout(() => { window.print(); }, 1200);
+  })();
+</script>
+
+</body>
+</html>
