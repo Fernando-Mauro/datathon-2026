@@ -5,13 +5,17 @@ import { useRouter, usePathname } from "next/navigation";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 
 /**
- * Protect a client subtree. Mounts `Authenticator.Provider` is assumed to
- * be present at root (`app/AmplifyProvider.tsx`).
+ * Protect a client subtree. Assumes `Authenticator.Provider` is mounted at
+ * the root (`app/AmplifyProvider.tsx`).
  *
- * Three states:
+ * Three-way mental model:
  *   - `configuring`    → spinner + "Loading…" (no flash of protected content)
- *   - `unauthenticated`→ router.replace to /login?from=<current path>
  *   - `authenticated`  → renders children
+ *   - everything else  → router.replace to /login?from=<current path>
+ *
+ * The redirect branch is the default (rather than an exact `unauthenticated`
+ * match) so any future Amplify AuthStatus widening (e.g. `signOut`,
+ * `refreshing`) still triggers the bounce instead of rendering blank.
  *
  * MUST NOT be mounted on /login itself (would loop). The pathname guard below
  * is a defensive backstop; the convention is "only wrap routes that should be
@@ -23,7 +27,11 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   const { authStatus } = useAuthenticator((ctx) => [ctx.authStatus]);
 
   useEffect(() => {
-    if (authStatus === "unauthenticated" && !pathname.startsWith("/login")) {
+    if (
+      authStatus !== "authenticated" &&
+      authStatus !== "configuring" &&
+      !pathname.startsWith("/login")
+    ) {
       router.replace(`/login?from=${encodeURIComponent(pathname)}`);
     }
   }, [authStatus, pathname, router]);
@@ -47,6 +55,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  // unauthenticated — redirect effect has fired; render nothing in the meantime
+  // any non-authenticated, non-configuring state — redirect effect has fired;
+  // render nothing in the meantime
   return null;
 }
