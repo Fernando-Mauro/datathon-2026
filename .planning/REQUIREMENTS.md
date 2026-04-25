@@ -17,7 +17,8 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 
 ### AUTH — Autenticación
 
-- [ ] **AUTH-01**: Cognito User Pool con email + contraseña configurado declarativamente en `amplify/auth/resource.ts` vía `defineAuth({ loginWith: { email: true } })`
+- [x] **AUTH-01
+**: Cognito User Pool con email + contraseña configurado declarativamente en `amplify/auth/resource.ts` vía `defineAuth({ loginWith: { email: true } })`
 - [ ] **AUTH-02**: Federation con Google OAuth funcionando — Google Cloud OAuth client creado, credenciales en Amplify secrets, callback URLs registrados en Cognito User Pool
 - [ ] **AUTH-03**: Componente `<Authenticator>` de `@aws-amplify/ui-react` integrado en Next.js — flujos de sign-up (con verificación email), sign-in, sign-out y reset password operativos
 - [ ] **AUTH-04**: Ruta protegida (ej. `/app` o `/dashboard`) que redirige a `/login` (o muestra `<Authenticator>`) cuando no hay sesión activa, y muestra contenido cuando sí
@@ -51,7 +52,7 @@ Qué phases cubren qué requirements.
 | INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | INFRA-02 | Phase 5 — Amplify Hosting + GitHub CI | Pending |
 | INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
-| AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
+| AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete (source) |
 | AUTH-02 | Phase 3 — Google OAuth Federation | Pending |
 | AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
 | AUTH-04 | Phase 4 — Protected Route & Auth Guard | Pending |

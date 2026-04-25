@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Phase 2 context gathered
-last_updated: "2026-04-25T15:47:24.671Z"
+status: executing
+stopped_at: Completed 02-01-PLAN.md (Cognito User Pool resource declared + wired)
+last_updated: "2026-04-25T15:56:15.547Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 10
-  completed_plans: 5
-  percent: 50
+  completed_plans: 6
+  percent: 60
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-25)
 
 **Core value:** Llegar al día del datatón con login funcionando, base desplegada y pipeline de CI listo, para gastar el 100% del tiempo del evento construyendo la solución, no peleando con infra.
-**Current focus:** Phase 1 — Foundation & Amplify Backend Skeleton
+**Current focus:** Phase 2 — Email/Password Auth + Authenticator UI
 
 ## Current Position
 
-Phase: 1 (Foundation & Amplify Backend Skeleton) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
+Phase: 2 (Email/Password Auth + Authenticator UI) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
 Last activity: 2026-04-25
 
-Progress: [████████░░] 80%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [████████░░] 80%
 | Phase 01-foundation-amplify-backend-skeleton P01 | 3min | 2 tasks | 2 files |
 | Phase 01-foundation-amplify-backend-skeleton P02 | 3min | 2 tasks tasks | 5 files files |
 | Phase 01-foundation-amplify-backend-skeleton P04 | 3min | 1 task tasks | 1 file files |
+| Phase 02-email-password-auth-authenticator-ui P01 | 3min | 2 tasks tasks | 2 files files |
 
 ## Accumulated Context
 
@@ -79,6 +80,9 @@ Recent decisions affecting current work:
 - README ## Setup section uses profile name 'datathon-2026' consistently across all 7 numbered steps; documents both access-key and SSO flows; uses npx ampx (never bunx) per G-10
 - Avoided printing the literal anti-pattern 'bunx ampx' in README — rephrased the warning as 'do not launch via Bun's binary launcher' so the educational guidance survives the strict acceptance check (! grep -qF 'bunx ampx')
 - Phase 1 complete: empty Amplify Gen2 sandbox deployed to us-east-1 (account 992839645871). Stack: amplify-datathon2026-fernando-sandbox-0d21400c4f. CDK Bootstrap one-time setup completed via temporary AdministratorAccess on aws-cli-amplify IAM user (to be detached post-deploy).
+- Phase 2 Plan 01: Used CDK property fullname (NOT name) per L-1 — maps to OIDC standard claim 'name' on the wire
+- Phase 2 Plan 01: Omitted passwordPolicy and userVerification — Cognito defaults already match D-19/D-20 (verified against installed @aws-amplify/auth-construct/lib/defaults.js + aws-cdk-lib/aws-cognito/lib/user-pool.js)
+- Phase 2 Plan 01: Dropped Phase 1 backend.ts JSDoc — 'bare skeleton' explanation no longer factually correct now that auth resource is wired (PATTERNS Option A)
 
 ### Pending Todos
 
@@ -99,8 +103,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: --stopped-at
-Stopped at: Phase 2 context gathered
-Resume file: --resume-file
+Last session: 2026-04-25T15:56:15.542Z
+Stopped at: Completed 02-01-PLAN.md (Cognito User Pool resource declared + wired)
+Resume file: None
 
 **Planned Phase:** 2 (Email/Password Auth + Authenticator UI) — 5 plans — 2026-04-25T15:47:24.666Z
