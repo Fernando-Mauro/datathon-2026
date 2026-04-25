@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-02-PLAN.md (boundaries + .env.example + Amplify-aware .gitignore)
-last_updated: "2026-04-25T13:23:51.831Z"
+stopped_at: "Completed 01-04-PLAN.md (README ## Setup section)"
+last_updated: "2026-04-25T13:28:49.212Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
-  percent: 60
+  completed_plans: 4
+  percent: 80
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 1 (Foundation & Amplify Backend Skeleton) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
-Progress: [████░░░░░░] 40%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [████░░░░░░] 40%
 *Updated after each plan completion*
 | Phase 01-foundation-amplify-backend-skeleton P01 | 3min | 2 tasks | 2 files |
 | Phase 01-foundation-amplify-backend-skeleton P02 | 3min | 2 tasks tasks | 5 files files |
+| Phase 01-foundation-amplify-backend-skeleton P04 | 3min | 1 task tasks | 1 file files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - Append-only .gitignore edit preserves existing 42 lines; !.env.example allow override placed AFTER .env* rule (last-match-wins gitignore semantics)
 - Amplify gitignore patterns at repo root (no amplify/ prefix) per G-8 — amplify_outputs.json lands at project root, not under amplify/
 - Audit ignore-list for 24 Amplify CLI build-tool transitive CVEs (handlebars, minimatch, immutable, yaml, fast-xml-parser, lodash, uuid, @smithy/config-resolver). PostCSS CVE GHSA-qx2v-qp2m-jg93 remains closed via overrides. User-approved deviation from PLAN 01-03 — see 01-03-SUMMARY.md.
+- README ## Setup section uses profile name 'datathon-2026' consistently across all 7 numbered steps; documents both access-key and SSO flows; uses npx ampx (never bunx) per G-10
+- Avoided printing the literal anti-pattern 'bunx ampx' in README — rephrased the warning as 'do not launch via Bun's binary launcher' so the educational guidance survives the strict acceptance check (! grep -qF 'bunx ampx')
 
 ### Pending Todos
 
@@ -95,8 +98,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-25T06:42:23.136Z
-Stopped at: Completed 01-02-PLAN.md (boundaries + .env.example + Amplify-aware .gitignore)
+Last session: 2026-04-25T13:28:49.207Z
+Stopped at: Completed 01-04-PLAN.md (README ## Setup section)
 Resume file: None
 
 **Planned Phase:** 1 (Foundation & Amplify Backend Skeleton) — 5 plans — 2026-04-25T06:14:59.652Z
