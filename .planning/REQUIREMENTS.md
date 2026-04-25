@@ -9,7 +9,8 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 
 ### INFRA — Backend & Deploy
 
-- [ ] **INFRA-01**: Backend Amplify Gen2 inicializado (`amplify/` directory + `defineBackend()` en `amplify/backend.ts`) y desplegable a personal sandbox vía `npx ampx sandbox`
+- [x] **INFRA-01
+**: Backend Amplify Gen2 inicializado (`amplify/` directory + `defineBackend()` en `amplify/backend.ts`) y desplegable a personal sandbox vía `npx ampx sandbox`
 - [ ] **INFRA-02**: App desplegada en AWS Amplify Hosting con CI auto-deploy desde GitHub (push a `main` → build → deploy)
 - [x] **INFRA-03
 **: Vulnerabilidad PostCSS XSS resuelta (actualizar dependencias afectadas detectadas por el codebase mapper en `.planning/codebase/CONCERNS.md`)

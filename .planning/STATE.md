@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md (PostCSS CVE closed via overrides; lint/typecheck/audit/clean scripts installed)
-last_updated: "2026-04-25T06:25:52.308Z"
+stopped_at: Completed 01-02-PLAN.md (boundaries + .env.example + Amplify-aware .gitignore)
+last_updated: "2026-04-25T06:42:23.140Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
-  percent: 20
+  completed_plans: 2
+  percent: 40
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-04-25)
 ## Current Position
 
 Phase: 1 (Foundation & Amplify Backend Skeleton) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-04-25
 
-Progress: [██░░░░░░░░] 20%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [██░░░░░░░░] 20%
 
 *Updated after each plan completion*
 | Phase 01-foundation-amplify-backend-skeleton P01 | 3min | 2 tasks | 2 files |
+| Phase 01-foundation-amplify-backend-skeleton P02 | 3min | 2 tasks tasks | 5 files files |
 
 ## Accumulated Context
 
@@ -69,6 +70,10 @@ Recent decisions affecting current work:
 - Used package.json overrides to close PostCSS CVE GHSA-qx2v-qp2m-jg93 (next@16.2.4 exact-pins postcss@8.4.31, so bun update / bun add could not lift the nested entry)
 - Strict ESLint flat-config gate uses 'eslint . --max-warnings=0' directly (NOT 'next lint' which was removed in Next.js 16 per G-1)
 - Phase 1 verification gauntlet established: bun run lint && bun run typecheck && bun run audit && bun run build (must remain green at end of every subsequent plan)
+- Used Next 16.2 unstable_retry (NOT legacy reset) in app/error.tsx per node_modules/next/dist/docs and RESEARCH G-2
+- Skipped app/global-error.tsx — out of scope per RESEARCH §4.d (root layout has no async work yet); root error.tsx is sufficient
+- Append-only .gitignore edit preserves existing 42 lines; !.env.example allow override placed AFTER .env* rule (last-match-wins gitignore semantics)
+- Amplify gitignore patterns at repo root (no amplify/ prefix) per G-8 — amplify_outputs.json lands at project root, not under amplify/
 
 ### Pending Todos
 
@@ -89,8 +94,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-04-25T06:25:52.304Z
-Stopped at: Completed 01-01-PLAN.md (PostCSS CVE closed via overrides; lint/typecheck/audit/clean scripts installed)
+Last session: 2026-04-25T06:42:23.136Z
+Stopped at: Completed 01-02-PLAN.md (boundaries + .env.example + Amplify-aware .gitignore)
 Resume file: None
 
 **Planned Phase:** 1 (Foundation & Amplify Backend Skeleton) — 5 plans — 2026-04-25T06:14:59.652Z
