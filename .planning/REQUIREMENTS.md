@@ -42,24 +42,24 @@ Excluido explícitamente. Documentado para evitar scope creep.
 
 ## Traceability
 
-Qué phases cubren qué requirements. Se completa cuando se cree el roadmap.
+Qué phases cubren qué requirements.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | TBD | Pending |
-| INFRA-02 | TBD | Pending |
-| INFRA-03 | TBD | Pending |
-| AUTH-01 | TBD | Pending |
-| AUTH-02 | TBD | Pending |
-| AUTH-03 | TBD | Pending |
-| AUTH-04 | TBD | Pending |
-| AUTH-05 | TBD | Pending |
+| INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Pending |
+| INFRA-02 | Phase 5 — Amplify Hosting + GitHub CI | Pending |
+| INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Pending |
+| AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
+| AUTH-02 | Phase 3 — Google OAuth Federation | Pending |
+| AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
+| AUTH-04 | Phase 4 — Protected Route & Auth Guard | Pending |
+| AUTH-05 | Phase 2 — Email/Password Auth + Authenticator UI | Pending |
 
 **Coverage:**
 - v1 requirements: 8 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 8 ⚠️
+- Mapped to phases: 8
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-25*
-*Last updated: 2026-04-25 after initial definition*
+*Last updated: 2026-04-24 — traceability table populated after roadmap creation*
