@@ -1,4 +1,4 @@
-import { defineFunction, secret } from "@aws-amplify/backend";
+import { defineFunction } from "@aws-amplify/backend";
 
 /**
  * Lambda HAVI saved-charts handler.
@@ -22,6 +22,7 @@ export const savedChartsHandler = defineFunction({
     DB_USER: "havica_app",
     DB_NAME: "datathon",
     DB_SSL: "1",
-    DB_PASSWORD: secret("DB_PASSWORD_RO"),
+    // Inline temporal — datathon. Rotar el password después del demo y mover a secret().
+    DB_PASSWORD: "25yi67EWNpnNDajejgJe1Llh",
   },
 });

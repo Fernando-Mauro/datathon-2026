@@ -1,4 +1,4 @@
-import { defineFunction, secret } from "@aws-amplify/backend";
+import { defineFunction } from "@aws-amplify/backend";
 
 /**
  * Lambda HAVI report handler.
@@ -22,7 +22,8 @@ export const reportHandler = defineFunction({
     DB_USER: "havica_app",
     DB_NAME: "datathon",
     DB_SSL: "1",
-    DB_PASSWORD: secret("DB_PASSWORD_RO"),
+    // Inline temporal — datathon. Rotar el password después del demo y mover a secret().
+    DB_PASSWORD: "25yi67EWNpnNDajejgJe1Llh",
     BEDROCK_MODEL_ID: "us.anthropic.claude-haiku-4-5-20251001-v1:0",
     BEDROCK_REGION: "us-east-1",
   },
