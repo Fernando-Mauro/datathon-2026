@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AppHeader } from "@/app/_components/AppHeader";
 import { Composer } from "@/app/_components/Composer";
 import { MessagesList } from "@/app/_components/MessagesList";
@@ -152,6 +153,24 @@ export default function ChatHome() {
       setTyping(false);
     }
   };
+
+  // ─── Auto-send via ?prompt= (de notificaciones u otras CTAs) ───────────
+  // Si llega un prompt en la URL, lo dispara una sola vez y limpia el query.
+  // Esperamos a que el chat haya hidratado (messages.length > 0) para no
+  // dispararlo antes de tener historia previa.
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const triggeredPromptRef = useRef<string | null>(null);
+  useEffect(() => {
+    const promptParam = searchParams.get("prompt");
+    if (!promptParam) return;
+    if (triggeredPromptRef.current === promptParam) return;
+    if (messages.length === 0) return;
+    triggeredPromptRef.current = promptParam;
+    void send(promptParam);
+    router.replace("/app", { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, messages.length]);
 
   return (
     <div className="flex min-h-screen flex-col bg-hey-bg">

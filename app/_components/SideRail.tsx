@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "aws-amplify/auth";
 import {
+  Bell,
   Bookmark,
   ListOrdered,
   LogOut,
@@ -21,6 +22,7 @@ type NavItem = {
 
 const NAV: readonly NavItem[] = [
   { label: "Conversación", href: "/app", icon: MessageSquare },
+  { label: "Notificaciones", href: "/app/notificaciones", icon: Bell },
   { label: "Guardados", href: "/app/guardados", icon: Bookmark },
   { label: "Movimientos", href: "/app/movimientos", icon: ListOrdered },
   { label: "Cambiar usuario", href: "/app/personas", icon: Users },
