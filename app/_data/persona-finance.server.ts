@@ -197,7 +197,7 @@ async function queryCategoriesThisMonth(
   return rows.map((r) => ({ mcc: String(r.mcc), spent: Number(r.spent) }));
 }
 
-async function queryRecentTransactions(
+export async function queryRecentTransactions(
   userId: string,
   limit: number,
 ): Promise<Transaction[]> {

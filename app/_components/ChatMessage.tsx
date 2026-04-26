@@ -6,6 +6,7 @@ import { HaviRing } from "./HaviRing";
 import { SnapshotCard } from "./SnapshotCard";
 import { AlertCard } from "./AlertCard";
 import { ActionPill } from "./ActionPill";
+import { HavicaChart } from "./HavicaChart";
 import { formatMXN } from "@/app/_data/format";
 
 type Props = { message: ChatMessage };
@@ -35,7 +36,10 @@ export function ChatMessageView({ message }: Props) {
       className="flex items-start gap-3"
     >
       <HaviRing size={28} className="mt-1" />
-      <div className="flex max-w-[88%] flex-1 flex-col gap-3">
+      {/* min-w-0 es crítico aquí: sin él, el flex-1 no shrinkea bajo el ancho
+          intrínseco de un chart Nivo, y al hacer resize el chart se desborda
+          en vez de reflowear. */}
+      <div className="flex max-w-[88%] min-w-0 flex-1 flex-col gap-3">
         {renderHavi(message)}
       </div>
     </motion.div>
@@ -70,6 +74,9 @@ function renderHavi(message: ChatMessage & { from: "havi" }) {
 
     case "alert":
       return <AlertCard alert={message.alert} />;
+
+    case "chart":
+      return <HavicaChart chart={message.chart} />;
 
     case "transfer":
       return (

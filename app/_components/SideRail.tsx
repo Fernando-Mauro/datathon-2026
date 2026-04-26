@@ -4,9 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "aws-amplify/auth";
 import {
-  BarChart3,
-  Headphones,
-  LineChart,
+  Bookmark,
   ListOrdered,
   LogOut,
   MessageSquare,
@@ -23,16 +21,13 @@ type NavItem = {
 
 const NAV: readonly NavItem[] = [
   { label: "Conversación", href: "/app", icon: MessageSquare },
+  { label: "Guardados", href: "/app/guardados", icon: Bookmark },
   { label: "Movimientos", href: "/app/movimientos", icon: ListOrdered },
-  { label: "Gráficas", href: "/app/grafica/general", icon: BarChart3 },
-  { label: "Comparativa", href: "/app/comparativa", icon: LineChart },
-  { label: "Agente", href: "/app/agente", icon: Headphones },
   { label: "Cambiar usuario", href: "/app/personas", icon: Users },
 ];
 
 function isActive(pathname: string, href: string) {
   if (href === "/app") return pathname === "/app";
-  if (href.startsWith("/app/grafica")) return pathname.startsWith("/app/grafica");
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 

@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Hub } from "aws-amplify/utils";
 import type { ChatMessage } from "@/app/_data/types";
 
-const KEY = "havi-chat-v1";
-const VERSION = 1;
+const KEY_PREFIX = "havi-chat-v2-";
+const VERSION = 2;
 
 type StoredShape = {
   version: number;
@@ -13,10 +13,14 @@ type StoredShape = {
   updatedAt: string;
 };
 
-function read(initial: ChatMessage[]): ChatMessage[] {
+function keyFor(scope: string): string {
+  return `${KEY_PREFIX}${scope}`;
+}
+
+function read(scope: string, initial: ChatMessage[]): ChatMessage[] {
   if (typeof window === "undefined") return initial;
   try {
-    const raw = window.localStorage.getItem(KEY);
+    const raw = window.localStorage.getItem(keyFor(scope));
     if (!raw) return initial;
     const parsed = JSON.parse(raw) as StoredShape;
     if (parsed.version !== VERSION) return initial;
@@ -26,37 +30,56 @@ function read(initial: ChatMessage[]): ChatMessage[] {
   }
 }
 
-function clear() {
+/** Borra el chat de un scope específico. */
+function clearScope(scope: string) {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.removeItem(KEY);
+    window.localStorage.removeItem(keyFor(scope));
   } catch {
     /* ignore */
   }
 }
 
-export function useChatPersistence(initial: ChatMessage[]) {
-  // SSR-safe init: server renders `initial`, client hydrates and then loads from storage.
+/** Borra TODOS los chats almacenados (sign-out). */
+function clearAll() {
+  if (typeof window === "undefined") return;
+  try {
+    const toRemove: string[] = [];
+    for (let i = 0; i < window.localStorage.length; i++) {
+      const k = window.localStorage.key(i);
+      if (k && k.startsWith(KEY_PREFIX)) toRemove.push(k);
+    }
+    for (const k of toRemove) window.localStorage.removeItem(k);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Persistencia de chat scoped por persona.
+ * @param initial mensajes iniciales si no hay nada guardado para ese scope.
+ * @param scope id de la persona activa — cambiar el scope re-hidrata desde
+ *              su propio slot de localStorage (cada persona ve su propio chat).
+ */
+export function useChatPersistence(initial: ChatMessage[], scope: string) {
   const [messages, setMessages] = useState<ChatMessage[]>(initial);
-  const hydrated = useRef(false);
+  const hydratedFor = useRef<string | null>(null);
   const writeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Hydrate from localStorage once after mount. The setState-in-effect is
-  // intentional: SSR renders `initial`, then on the client we swap to the
-  // persisted state. useSyncExternalStore would be the React-canonical fix
-  // but adds significant complexity for a client-only persistence hook.
+  // Re-hidrata cuando cambia el scope (incluyendo el primer mount).
   useEffect(() => {
-    if (hydrated.current) return;
-    hydrated.current = true;
-    const stored = read(initial);
+    if (hydratedFor.current === scope) return;
+    hydratedFor.current = scope;
+    const stored = read(scope, initial);
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (stored !== initial) setMessages(stored);
+    setMessages(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [scope]);
 
-  // Debounced write on change.
+  // Debounced write — sólo escribe si ya hidratamos para el scope actual,
+  // para evitar pisar localStorage con el `initial` antes de leer.
   useEffect(() => {
-    if (!hydrated.current) return;
+    if (hydratedFor.current !== scope) return;
     if (writeTimer.current) clearTimeout(writeTimer.current);
     writeTimer.current = setTimeout(() => {
       try {
@@ -65,7 +88,7 @@ export function useChatPersistence(initial: ChatMessage[]) {
           messages,
           updatedAt: new Date().toISOString(),
         };
-        window.localStorage.setItem(KEY, JSON.stringify(payload));
+        window.localStorage.setItem(keyFor(scope), JSON.stringify(payload));
       } catch {
         /* quota or disabled — ignore */
       }
@@ -73,22 +96,22 @@ export function useChatPersistence(initial: ChatMessage[]) {
     return () => {
       if (writeTimer.current) clearTimeout(writeTimer.current);
     };
-  }, [messages]);
+  }, [messages, scope]);
 
-  // Clear on sign-out (Pitfall 8 — Hub.listen returns cleanup directly).
+  // En sign-out, borra todo el historial de chats.
   useEffect(() => {
     return Hub.listen("auth", ({ payload }) => {
       if (payload.event === "signedOut") {
-        clear();
+        clearAll();
         setMessages(initial);
       }
     });
   }, [initial]);
 
   const reset = useCallback(() => {
-    clear();
+    clearScope(scope);
     setMessages(initial);
-  }, [initial]);
+  }, [scope, initial]);
 
   return { messages, setMessages, reset } as const;
 }

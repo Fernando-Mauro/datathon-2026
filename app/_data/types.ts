@@ -64,6 +64,27 @@ export type ChatActionPill = {
   target: string;
 };
 
+/** Tipos de visualización soportados por HavicaChart (Nivo-backed). */
+export type ChartType =
+  | "bar"
+  | "horizontal_bar"
+  | "line"
+  | "pie"
+  | "radial_bar";
+
+/** Reporte renderizable en el chat — viene del Lambda `report-handler`. */
+export type ReportChart = {
+  reportType: string;
+  chartType: ChartType;
+  title: string;
+  data: Array<Record<string, unknown>>;
+  xKey: string;
+  yKey: string;
+  series?: string[];
+  sql: string;
+  source: "template" | "freeform";
+};
+
 export type ChatMessage =
   | { id: string; from: "user"; kind: "text"; text: string }
   | { id: string; from: "havi"; kind: "text"; text: string }
@@ -77,6 +98,7 @@ export type ChatMessage =
     }
   | { id: string; from: "havi"; kind: "alert"; alert: AlertItem }
   | { id: string; from: "havi"; kind: "transfer"; recipient: string; amount: number }
+  | { id: string; from: "havi"; kind: "chart"; chart: ReportChart }
   | { id: string; from: "havi"; kind: "fallback" };
 
 export type HaviResponse = Omit<ChatMessage, "id" | "from"> & { from: "havi" };
