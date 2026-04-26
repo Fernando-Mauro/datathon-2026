@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronRight, Sparkles } from "lucide-react";
-import { useActivePersona } from "@/app/_hooks/usePersona";
+import { usePersona } from "@/app/_hooks/usePersona";
 import { formatMXN, formatTransaction } from "@/app/_data/format";
 import { Sparkline } from "./Sparkline";
 import { HaviRing } from "./HaviRing";
@@ -14,7 +14,10 @@ const QUICK_ACTIONS: ReadonlyArray<{ label: string; href: string }> = [
 ];
 
 export function ContextPane() {
-  const persona = useActivePersona();
+  const { persona } = usePersona();
+  // Renderizado en paralelo a <PersonaGuard> — antes de que hidrate
+  // localStorage o si nadie ha entrado al picker, no hay persona aún.
+  if (!persona) return null;
   const { balance, spentThisMonth, spentPct, sparkline } = persona.snapshot;
   const topCategories = persona.categories.slice(0, 3);
   const recentTx = persona.transactions.slice(0, 4);
