@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { signOut } from "aws-amplify/auth";
 import {
   Bell,
@@ -36,6 +37,17 @@ function isActive(pathname: string, href: string) {
 export function SideRail() {
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setMobileOpen((open) => !open);
+    window.addEventListener("havi:toggle-sidebar", handler);
+    return () => window.removeEventListener("havi:toggle-sidebar", handler);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   async function handleSignOut() {
     await signOut();
@@ -43,14 +55,23 @@ export function SideRail() {
   }
 
   return (
-    <aside
-      className="fixed top-0 left-0 z-40 hidden h-screen w-[72px] flex-col items-center border-r border-hey-divider bg-[#0A0A0A] py-5 lg:flex"
-      style={{
-        backgroundImage:
-          "linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.015) 100%)",
-      }}
-      aria-label="Navegación principal"
-    >
+    <>
+      {mobileOpen && (
+        <button
+          type="button"
+          aria-label="Cerrar menú"
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+        />
+      )}
+      <aside
+        className={`fixed top-0 left-0 z-50 h-screen w-[72px] flex-col items-center border-r border-hey-divider bg-[#0A0A0A] py-5 lg:flex ${mobileOpen ? "flex" : "hidden"}`}
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.015) 100%)",
+        }}
+        aria-label="Navegación principal"
+      >
       {/* Brand mark + home button */}
       <Link
         href="/app"
@@ -111,6 +132,7 @@ export function SideRail() {
           Cerrar sesión
         </span>
       </button>
-    </aside>
+      </aside>
+    </>
   );
 }

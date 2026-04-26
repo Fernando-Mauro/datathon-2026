@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Menu } from "lucide-react";
 import { Wordmark } from "./Wordmark";
 
 type Props = {
@@ -13,16 +13,30 @@ type Props = {
   onBack?: () => void;
 };
 
+function MenuButton() {
+  return (
+    <button
+      type="button"
+      onClick={() => window.dispatchEvent(new Event("havi:toggle-sidebar"))}
+      className="-ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-hey-fg-1 transition hover:bg-hey-surface-2 active:opacity-60"
+      aria-label="Abrir menú"
+    >
+      <Menu size={22} strokeWidth={2} />
+    </button>
+  );
+}
+
 export function AppHeader({ title, trailing, onBack }: Props) {
   const router = useRouter();
 
   if (title) {
     return (
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-hey-divider bg-hey-bg/95 px-4 backdrop-blur-sm">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-hey-divider bg-hey-bg/95 px-4 backdrop-blur-sm">
+        <MenuButton />
         <button
           type="button"
           onClick={onBack ?? (() => router.back())}
-          className="-ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-hey-fg-1 transition hover:bg-hey-surface-2 active:opacity-60"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-hey-fg-1 transition hover:bg-hey-surface-2 active:opacity-60"
           aria-label="Regresar"
         >
           <ChevronLeft size={22} strokeWidth={2} />
@@ -34,7 +48,8 @@ export function AppHeader({ title, trailing, onBack }: Props) {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-hey-divider bg-hey-bg/95 px-4 backdrop-blur-sm">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-hey-divider bg-hey-bg/95 px-4 backdrop-blur-sm">
+      <MenuButton />
       <Wordmark size="md" />
       {trailing && <div className="ml-auto flex items-center gap-2">{trailing}</div>}
     </header>
