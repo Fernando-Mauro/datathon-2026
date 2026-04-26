@@ -23,6 +23,10 @@ frontend:
         - bun install --frozen-lockfile
     build:
       commands:
+        # Persist Hosting env vars into .env.production so Next.js los carga al
+        # iniciar el SSR Lambda. Amplify pasa las env vars al build container
+        # pero NO al runtime — este paso las puentea.
+        - env | grep -E '^(DB_|BEDROCK_)' > .env.production
         - bun run build
   artifacts:
     baseDirectory: .next
