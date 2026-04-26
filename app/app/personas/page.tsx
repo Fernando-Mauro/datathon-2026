@@ -1,22 +1,29 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { motion } from "motion/react";
-import { ArrowRight } from "lucide-react";
-import { usePersona } from "@/app/_hooks/usePersona";
+import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Wordmark } from "@/app/_components/Wordmark";
 import { HaviRing } from "@/app/_components/HaviRing";
-import { formatMXN } from "@/app/_data/format";
-import type { Persona } from "@/app/_data/personas";
+import { listPersonasPage, countPersonas } from "@/app/_data/personas.server";
+import { PickerRow } from "./_picker-row";
 
-export default function PersonasPage() {
-  const router = useRouter();
-  const { allPersonas, setPersonaById } = usePersona();
+const PAGE_SIZE = 10;
 
-  const enter = (id: string) => {
-    setPersonaById(id);
-    router.push("/app");
-  };
+type Search = { page?: string };
+
+export default async function PersonasPage({
+  searchParams,
+}: {
+  searchParams: Promise<Search>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const requestedPage = Math.max(1, Number(pageParam) || 1);
+
+  const [items, total] = await Promise.all([
+    listPersonasPage(requestedPage, PAGE_SIZE),
+    countPersonas(),
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const safePage = Math.min(requestedPage, totalPages);
 
   return (
     <main className="flex min-h-screen flex-col bg-hey-bg">
@@ -35,11 +42,37 @@ export default function PersonasPage() {
         </p>
       </section>
 
-      <section className="hey-app-frame grid grid-cols-1 gap-3 px-4 pb-12 lg:grid-cols-2 lg:gap-4 lg:px-8">
-        {allPersonas.map((p, i) => (
-          <PersonaCard key={p.id} persona={p} onPick={enter} index={i} />
+      <section className="hey-app-frame flex flex-col gap-2 px-4 lg:px-8">
+        {items.map((item, i) => (
+          <PickerRow key={item.id} item={item} index={i} />
         ))}
       </section>
+
+      {totalPages > 1 ? (
+        <nav
+          aria-label="Paginación de usuarios"
+          className="hey-app-frame mt-4 flex items-center justify-between gap-3 px-4 pb-12 lg:px-8"
+        >
+          <PageLink
+            page={safePage - 1}
+            disabled={safePage <= 1}
+            label="Anterior"
+            icon="left"
+          />
+          <span className="text-[12px] text-hey-fg-2">
+            Página <span className="font-semibold text-hey-fg-1">{safePage}</span> de {totalPages}
+            <span className="ml-2 text-hey-fg-3">· {total.toLocaleString("es-MX")} usuarios</span>
+          </span>
+          <PageLink
+            page={safePage + 1}
+            disabled={safePage >= totalPages}
+            label="Siguiente"
+            icon="right"
+          />
+        </nav>
+      ) : (
+        <div className="pb-12" />
+      )}
 
       <footer className="hey-app-frame flex items-center justify-center gap-2 px-4 pb-8 text-center text-[11px] text-hey-fg-3">
         <HaviRing size={14} />
@@ -49,70 +82,36 @@ export default function PersonasPage() {
   );
 }
 
-function PersonaCard({
-  persona,
-  onPick,
-  index,
+function PageLink({
+  page,
+  disabled,
+  label,
+  icon,
 }: {
-  persona: Persona;
-  onPick: (id: string) => void;
-  index: number;
+  page: number;
+  disabled: boolean;
+  label: string;
+  icon: "left" | "right";
 }) {
-  const initials = persona.fullName
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((s) => s[0]?.toUpperCase() ?? "")
-    .join("");
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.32, delay: index * 0.06, ease: [0.32, 0.72, 0, 1] }}
-      className="group flex flex-col gap-4 rounded-hey-md border border-hey-divider bg-hey-surface-1 p-5 transition hover:border-hey-blue hover:bg-hey-surface-2"
-    >
-      <header className="flex items-center gap-3">
-        <div
-          aria-hidden
-          className="flex h-12 w-12 flex-none items-center justify-center rounded-full font-serif text-[15px] font-bold text-hey-fg-1"
-          style={{
-            background: `var(${persona.avatarVar.replace(/--color-(.+)/, "--color-$1-bg")})`,
-            color: `var(${persona.avatarVar})`,
-          }}
-        >
-          {initials}
-        </div>
-        <div className="flex flex-1 flex-col gap-0.5">
-          <h2 className="font-serif text-[18px] font-semibold leading-tight text-hey-fg-1">
-            {persona.fullName}
-          </h2>
-          <p className="text-[12px] text-hey-fg-2">{persona.headline}</p>
-        </div>
-      </header>
-
-      <dl className="grid grid-cols-2 gap-3 border-t border-hey-divider pt-4">
-        <div className="flex flex-col gap-0.5">
-          <dt className="text-[10px] uppercase tracking-wider text-hey-fg-3">Saldo</dt>
-          <dd className="hey-amount text-[18px] font-semibold text-hey-fg-1">
-            {formatMXN(persona.snapshot.balance)}
-          </dd>
-        </div>
-        <div className="flex flex-col gap-0.5">
-          <dt className="text-[10px] uppercase tracking-wider text-hey-fg-3">Gastado mes</dt>
-          <dd className="hey-amount text-[18px] font-semibold text-hey-fg-1">
-            {formatMXN(persona.snapshot.spentThisMonth)}
-          </dd>
-        </div>
-      </dl>
-
-      <button
-        type="button"
-        onClick={() => onPick(persona.id)}
-        className="mt-auto inline-flex items-center justify-center gap-2 rounded-hey-pill bg-hey-blue py-3 text-[14px] font-semibold text-white transition hover:bg-hey-blue-hover active:bg-hey-blue-press"
+  const cls =
+    "inline-flex items-center gap-1 rounded-hey-pill border border-hey-divider bg-hey-surface-1 px-4 py-2 text-[13px] font-medium text-hey-fg-1 transition hover:border-hey-blue hover:bg-hey-surface-2";
+  if (disabled) {
+    return (
+      <span
+        aria-disabled="true"
+        className={`${cls} cursor-not-allowed opacity-40 hover:border-hey-divider hover:bg-hey-surface-1`}
       >
-        Entrar como {persona.firstName}
-        <ArrowRight size={14} strokeWidth={2.4} />
-      </button>
-    </motion.article>
+        {icon === "left" ? <ChevronLeft size={16} strokeWidth={2.2} /> : null}
+        {label}
+        {icon === "right" ? <ChevronRight size={16} strokeWidth={2.2} /> : null}
+      </span>
+    );
+  }
+  return (
+    <Link href={`/app/personas?page=${page}`} className={cls} prefetch={false}>
+      {icon === "left" ? <ChevronLeft size={16} strokeWidth={2.2} /> : null}
+      {label}
+      {icon === "right" ? <ChevronRight size={16} strokeWidth={2.2} /> : null}
+    </Link>
   );
 }

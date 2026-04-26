@@ -10,35 +10,38 @@ import {
   type ReactNode,
 } from "react";
 import { Hub } from "aws-amplify/utils";
-import { getPersonaById, personas, type Persona } from "@/app/_data/personas";
+import type { Persona } from "@/app/_data/personas";
 
-const KEY = "havica-active-persona-v1";
+// Bumped to v2 — antes guardábamos sólo el id (string), ahora el Persona completo.
+// El cambio de key invalida cualquier valor v1 sin necesidad de migración.
+const KEY = "havica-active-persona-v2";
 
 type Ctx = {
   persona: Persona | null;
-  setPersonaById: (id: string) => void;
+  setPersona: (p: Persona) => void;
   clearPersona: () => void;
-  allPersonas: readonly Persona[];
 };
 
 const PersonaCtx = createContext<Ctx | null>(null);
 
-function readStored(): string | null {
+function readStored(): Persona | null {
   if (typeof window === "undefined") return null;
   try {
-    return window.localStorage.getItem(KEY);
+    const raw = window.localStorage.getItem(KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as Persona;
   } catch {
     return null;
   }
 }
 
 export function PersonaProvider({ children }: { children: ReactNode }) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [active, setActive] = useState<Persona | null>(null);
 
   // Hydrate from localStorage on mount.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setActiveId(readStored());
+    setActive(readStored());
   }, []);
 
   // Clear active persona on sign-out.
@@ -50,18 +53,18 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
         } catch {
           /* ignore */
         }
-        setActiveId(null);
+        setActive(null);
       }
     });
   }, []);
 
-  const setPersonaById = useCallback((id: string) => {
+  const setPersona = useCallback((p: Persona) => {
     try {
-      window.localStorage.setItem(KEY, id);
+      window.localStorage.setItem(KEY, JSON.stringify(p));
     } catch {
       /* ignore */
     }
-    setActiveId(id);
+    setActive(p);
   }, []);
 
   const clearPersona = useCallback(() => {
@@ -70,17 +73,12 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    setActiveId(null);
+    setActive(null);
   }, []);
 
   const value = useMemo<Ctx>(
-    () => ({
-      persona: getPersonaById(activeId) ?? null,
-      setPersonaById,
-      clearPersona,
-      allPersonas: personas,
-    }),
-    [activeId, setPersonaById, clearPersona],
+    () => ({ persona: active, setPersona, clearPersona }),
+    [active, setPersona, clearPersona],
   );
 
   return <PersonaCtx.Provider value={value}>{children}</PersonaCtx.Provider>;
