@@ -1,25 +1,31 @@
 "use client";
 
 import { MotionConfig } from "motion/react";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { SideRail } from "@/app/_components/SideRail";
 import { ContextPane } from "@/app/_components/ContextPane";
+import { PersonaProvider } from "@/app/_hooks/usePersona";
+import { PersonaGuard } from "@/app/_components/PersonaGuard";
 
-// Template re-mounts on each navigation under /app/* — perfect spot for the
-// MotionConfig wrapper + responsive desktop shell.
-//
-// Mobile (<lg): SideRail + ContextPane render `hidden`, children fill the
-// viewport with their own AppHeader / MobileNav chrome.
-//
-// Desktop (≥lg): SideRail (72px) is fixed left, ContextPane (320px) is fixed
-// right. Children render between them via `lg:pl-[72px] lg:pr-[320px]`.
-// `min-h-screen` ensures sticky composer in chat home anchors to viewport.
+// Template re-mounts on each navigation under /app/*.
+// - PersonaProvider: localStorage-backed active persona (the impersonation target).
+// - PersonaGuard: redirects to /app/personas if no persona is selected.
+// - On the picker route itself, the desktop rails are hidden and the layout
+//   renders edge-to-edge so the picker fills the viewport.
 export default function AppTemplate({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isPicker = pathname === "/app/personas";
+
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}>
-      <SideRail />
-      <ContextPane />
-      <div className="min-h-screen lg:pl-[72px] lg:pr-[320px]">{children}</div>
-    </MotionConfig>
+    <PersonaProvider>
+      <MotionConfig reducedMotion="user" transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}>
+        {!isPicker && <SideRail />}
+        {!isPicker && <ContextPane />}
+        <div className={isPicker ? "min-h-screen" : "min-h-screen lg:pl-[72px] lg:pr-[320px]"}>
+          <PersonaGuard>{children}</PersonaGuard>
+        </div>
+      </MotionConfig>
+    </PersonaProvider>
   );
 }

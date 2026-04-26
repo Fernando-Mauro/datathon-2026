@@ -1,11 +1,15 @@
-// HAVI snapshot — first message in chat. Balance + spent% + sparkline.
+"use client";
 
-import { mockSnapshot } from "@/app/_data/mock";
+// HAVI snapshot — first message in chat. Balance + spent% + sparkline.
+// Reads from the active persona (set in /app/personas picker).
+
+import { useActivePersona } from "@/app/_hooks/usePersona";
 import { formatMXN } from "@/app/_data/format";
 import { Sparkline } from "./Sparkline";
 
 export function SnapshotCard() {
-  const { balance, spentThisMonth, spentPct, sparkline } = mockSnapshot;
+  const { snapshot } = useActivePersona();
+  const { balance, spentThisMonth, spentPct, sparkline } = snapshot;
   return (
     <div className="rounded-hey-md bg-hey-surface-2 p-5">
       <p className="hey-eyebrow mb-2">Tu mes</p>

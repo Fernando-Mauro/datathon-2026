@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronRight, Sparkles } from "lucide-react";
-import { mockSnapshot, mockCategories, mockTransactions } from "@/app/_data/mock";
+import { useActivePersona } from "@/app/_hooks/usePersona";
 import { formatMXN, formatTransaction } from "@/app/_data/format";
 import { Sparkline } from "./Sparkline";
 import { HaviRing } from "./HaviRing";
@@ -14,9 +14,10 @@ const QUICK_ACTIONS: ReadonlyArray<{ label: string; href: string }> = [
 ];
 
 export function ContextPane() {
-  const { balance, spentThisMonth, spentPct, sparkline } = mockSnapshot;
-  const topCategories = [...mockCategories].slice(0, 3);
-  const recentTx = mockTransactions.slice(0, 4);
+  const persona = useActivePersona();
+  const { balance, spentThisMonth, spentPct, sparkline } = persona.snapshot;
+  const topCategories = persona.categories.slice(0, 3);
+  const recentTx = persona.transactions.slice(0, 4);
 
   return (
     <aside

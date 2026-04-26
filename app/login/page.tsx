@@ -14,7 +14,7 @@ function LoginPageInner() {
 
   useEffect(() => {
     if (authStatus === "authenticated") {
-      const from = safeFromPath(searchParams.get("from")) ?? "/app";
+      const from = safeFromPath(searchParams.get("from")) ?? "/app/personas";
       router.replace(from);
     }
   }, [authStatus, router, searchParams]);

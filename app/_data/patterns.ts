@@ -1,34 +1,30 @@
-// HAVI pattern dictionary — pattern-match mock brain (D-48). Order matters:
-// specific patterns first, catch-all (fallback) MUST be last.
+// HAVI pattern dictionary — persona-aware. Catch-all MUST be last.
 
-import { mockAlerts } from "./mock";
-import type { HaviPattern } from "./types";
+import type { Persona } from "./personas";
+import type { HaviResponse } from "./types";
 
 const id = () => `m-${Math.random().toString(36).slice(2, 10)}`;
 
-export const haviPatterns: HaviPattern[] = [
+type Pattern = {
+  match: RegExp;
+  reply: (input: string, persona: Persona) => HaviResponse;
+};
+
+const patterns: Pattern[] = [
   {
     match: /\btransfer(ir|encia)|enviar(\s+a)?\b/iu,
-    reply: () => ({
-      from: "havi",
-      kind: "transfer",
-      recipient: "Mariana",
-      amount: 500,
-    }),
+    reply: () => ({ from: "havi", kind: "transfer", recipient: "Mariana", amount: 500 }),
   },
   {
     match: /\bsaldo|cu[áa]nto tengo|balance\b/iu,
-    reply: () => ({
-      from: "havi",
-      kind: "snapshot",
-    }),
+    reply: () => ({ from: "havi", kind: "snapshot" }),
   },
   {
     match: /\bgast(é|amos|o|aste|os)|en qu[ée] gast|gasto del mes\b/iu,
-    reply: () => ({
+    reply: (_, persona) => ({
       from: "havi",
       kind: "actions",
-      text: "Llevas $3,280.50 este mes. ¿Cómo quieres verlo?",
+      text: `Llevas $${persona.snapshot.spentThisMonth.toLocaleString("es-MX")} este mes. ¿Cómo quieres verlo?`,
       actions: [
         { label: "Ver gráfica", target: "/app/grafica/general" },
         { label: "Movimientos", target: "/app/movimientos" },
@@ -38,19 +34,28 @@ export const haviPatterns: HaviPattern[] = [
   },
   {
     match: /\bpagar(\s+(la\s+)?tarjeta)?|fecha de corte|vence\b/iu,
-    reply: () => ({
-      from: "havi",
-      kind: "alert",
-      alert: mockAlerts["tarjeta-vence"],
-    }),
+    reply: (_, persona) => {
+      const alert =
+        persona.alerts["tarjeta-vence"] ??
+        persona.alerts["servicios-altos"] ??
+        Object.values(persona.alerts)[0];
+      return alert
+        ? { from: "havi", kind: "alert", alert }
+        : { from: "havi", kind: "fallback" };
+    },
   },
   {
     match: /\bmeta|ahorr(o|ar|amos)|presupuesto\b/iu,
-    reply: () => ({
-      from: "havi",
-      kind: "alert",
-      alert: mockAlerts["meta-ahorro"],
-    }),
+    reply: (_, persona) => {
+      const alert =
+        persona.alerts["meta-ahorro"] ??
+        persona.alerts["ahorro-establecido"] ??
+        persona.alerts["beca-llego"] ??
+        Object.values(persona.alerts)[0];
+      return alert
+        ? { from: "havi", kind: "alert", alert }
+        : { from: "havi", kind: "fallback" };
+    },
   },
   {
     match: /\bcomparativ(a|o)|mes (pasado|anterior)\b/iu,
@@ -72,11 +77,16 @@ export const haviPatterns: HaviPattern[] = [
   },
   {
     match: /\bcomida|caf[ée]|restaurante|sushi\b/iu,
-    reply: () => ({
-      from: "havi",
-      kind: "alert",
-      alert: mockAlerts["gasto-comida-alto"],
-    }),
+    reply: (_, persona) => {
+      const alert =
+        persona.alerts["gasto-comida-alto"] ??
+        persona.alerts["limite-cerca"] ??
+        persona.alerts["ahorra-tip"] ??
+        Object.values(persona.alerts)[0];
+      return alert
+        ? { from: "havi", kind: "alert", alert }
+        : { from: "havi", kind: "fallback" };
+    },
   },
   {
     match: /\bayuda|qué puedes hacer|funciones\b/iu,
@@ -88,27 +98,18 @@ export const haviPatterns: HaviPattern[] = [
         "alertas y movimientos. También conectarte con un agente humano si lo necesitas.",
     }),
   },
-  // Catch-all — MUST be last. Surfaces handoff to human agent.
+  // Catch-all — MUST be last.
   {
     match: /.*/u,
-    reply: () => ({
-      from: "havi",
-      kind: "fallback",
-    }),
+    reply: () => ({ from: "havi", kind: "fallback" }),
   },
 ];
 
-export function dispatchHavi(input: string): { kind: string; payload: ReturnType<HaviPattern["reply"]> } {
-  for (const p of haviPatterns) {
-    if (p.match.test(input)) {
-      return { kind: "matched", payload: p.reply(input) };
-    }
+export function dispatchHavi(input: string, persona: Persona): HaviResponse {
+  for (const p of patterns) {
+    if (p.match.test(input)) return p.reply(input, persona);
   }
-  // Should never reach (catch-all is last) but just in case:
-  return {
-    kind: "matched",
-    payload: { from: "havi", kind: "fallback" },
-  };
+  return { from: "havi", kind: "fallback" };
 }
 
 export function newMessageId(): string {

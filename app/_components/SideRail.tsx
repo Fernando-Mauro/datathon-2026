@@ -10,6 +10,7 @@ import {
   ListOrdered,
   LogOut,
   MessageSquare,
+  Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { HaviRing } from "./HaviRing";
@@ -26,6 +27,7 @@ const NAV: readonly NavItem[] = [
   { label: "Gráficas", href: "/app/grafica/general", icon: BarChart3 },
   { label: "Comparativa", href: "/app/comparativa", icon: LineChart },
   { label: "Agente", href: "/app/agente", icon: Headphones },
+  { label: "Cambiar usuario", href: "/app/personas", icon: Users },
 ];
 
 function isActive(pathname: string, href: string) {

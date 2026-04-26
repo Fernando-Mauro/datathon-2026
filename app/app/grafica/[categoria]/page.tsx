@@ -4,7 +4,7 @@ import { use } from "react";
 import { AppHeader } from "@/app/_components/AppHeader";
 import { BarChart } from "@/app/_components/BarChart";
 import { PageTransition } from "@/app/_components/PageTransition";
-import { mockCategories, mockSnapshot } from "@/app/_data/mock";
+import { useActivePersona } from "@/app/_hooks/usePersona";
 import { formatMXN } from "@/app/_data/format";
 
 type Params = { categoria: string };
@@ -12,12 +12,13 @@ type Params = { categoria: string };
 export default function GraficaPage({ params }: { params: Promise<Params> }) {
   // Next 16: dynamic params is a Promise — `use(params)` on the client.
   const { categoria } = use(params);
+  const { snapshot, categories } = useActivePersona();
 
   // "general" → all categories. Otherwise filter to one.
   const filtered =
     categoria === "general"
-      ? mockCategories
-      : mockCategories.filter((c) => c.id === categoria);
+      ? categories
+      : categories.filter((c) => c.id === categoria);
 
   const total = filtered.reduce((sum, c) => sum + c.spent, 0);
   const headerTitle =
@@ -36,7 +37,7 @@ export default function GraficaPage({ params }: { params: Promise<Params> }) {
           </span>
         </div>
         <p className="mb-6 text-[13px] text-hey-fg-2">
-          {mockSnapshot.spentPct}% de tu balance disponible
+          {snapshot.spentPct}% de tu balance disponible
         </p>
         <BarChart categories={filtered} />
       </main>

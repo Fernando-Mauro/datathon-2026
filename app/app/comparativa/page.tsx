@@ -4,12 +4,13 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { AppHeader } from "@/app/_components/AppHeader";
 import { PageTransition } from "@/app/_components/PageTransition";
-import { mockComparativa } from "@/app/_data/mock";
+import { useActivePersona } from "@/app/_hooks/usePersona";
 import { formatMXN } from "@/app/_data/format";
 
 export default function ComparativaPage() {
   const reduce = useReducedMotion();
-  const { thisMonth, prevMonth, delta, deltaPct } = mockComparativa;
+  const { comparativa } = useActivePersona();
+  const { thisMonth, prevMonth, delta, deltaPct } = comparativa;
   const up = delta > 0;
   const max = Math.max(thisMonth, prevMonth);
 
