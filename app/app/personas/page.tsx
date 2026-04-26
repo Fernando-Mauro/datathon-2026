@@ -38,7 +38,7 @@ export default async function PersonasPage({
           ¿Como quién entras a la conversación?
         </h1>
         <p className="mt-1 text-[14px] leading-snug text-hey-fg-2">
-          HaviCA cambia su contexto financiero — saldo, movimientos, alertas — según la persona que elijas.
+          Havi-business cambia su contexto financiero — saldo, movimientos, alertas — según la persona que elijas.
         </p>
       </section>
 

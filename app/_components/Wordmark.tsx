@@ -1,6 +1,6 @@
-// HaviCA wordmark — IBM Plex Serif Bold. The "CA" tail uppercases for emphasis
-// (HAVI = the assistant, CA = the suffix that brands the product). Used in /,
-// /login header, public home, and SideRail brand mark.
+// Havi-business wordmark — IBM Plex Serif Bold. The "-business" tail renders in
+// blue for emphasis (HAVI = the assistant, -business = product variant). Used
+// in /, /login header, public home, and SideRail brand mark.
 
 type Props = {
   /** rem size — defaults to lg ramp. */
@@ -18,9 +18,9 @@ export function Wordmark({ size = "lg", className = "" }: Props) {
   return (
     <span
       className={`font-serif font-bold tracking-tight text-hey-fg-1 select-none ${sizeClass[size]} ${className}`}
-      aria-label="HaviCA"
+      aria-label="Havi-business"
     >
-      Havi<span className="text-hey-blue">CA</span>
+      Havi<span className="text-hey-blue">-business</span>
     </span>
   );
 }

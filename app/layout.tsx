@@ -19,8 +19,8 @@ const plexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "HaviCA — tu copiloto financiero",
-  description: "HaviCA es tu copiloto financiero conversacional. Pregúntale a HAVI.",
+  title: "Havi-business — tu copiloto financiero",
+  description: "Havi-business es tu copiloto financiero conversacional. Pregúntale a HAVI.",
 };
 
 export default function RootLayout({

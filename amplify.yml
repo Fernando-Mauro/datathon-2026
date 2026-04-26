@@ -1,4 +1,4 @@
-# AWS Amplify Hosting build spec for HaviCA.
+# AWS Amplify Hosting build spec for Havi-business.
 # - Backend: Amplify Gen2 deploy via `npx ampx pipeline-deploy` (CFN stack per branch).
 # - Frontend: Next.js 16 SSR build on Bun. Amplify auto-detects Next and serves
 #   via WEB_COMPUTE (SSR) platform — `.next` is the artifact base, no static export.

@@ -21,7 +21,7 @@ export default function Home() {
         <div className="flex flex-col gap-3">
           <p className="hey-eyebrow">Conoce a</p>
           <h1 className="font-serif text-[44px] font-bold leading-none text-hey-fg-1">
-            Havi<span className="text-hey-blue">CA</span>
+            Havi<span className="text-hey-blue">-business</span>
           </h1>
           <p className="font-serif text-[20px] font-medium leading-snug text-hey-fg-1">
             Tu copiloto financiero, en una conversación.
@@ -40,7 +40,7 @@ export default function Home() {
       </main>
 
       <footer className="hey-app-frame px-4 py-6 text-center text-[11px] text-hey-fg-3">
-        HaviCA — copiloto financiero conversacional
+        Havi-business — copiloto financiero conversacional
       </footer>
     </div>
   );
