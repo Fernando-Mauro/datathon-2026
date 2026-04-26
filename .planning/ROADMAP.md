@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Foundation & Amplify Backend Skeleton** - Scaffold sano (sin CVE) y backend Amplify Gen2 desplegable a sandbox vacío
 - [ ] **Phase 2: Email/Password Auth + Authenticator UI** - Cognito User Pool + `<Authenticator>` integrado con sesión persistente
 - [x] **Phase 3: Protected Route & Auth Guard** - Ruta `/app` que sólo es accesible logged in
-- [ ] **Phase 4: Amplify Hosting + GitHub CI** - Despliegue continuo desde `main` a Amplify Hosting
+- [x] **Phase 4: Amplify Hosting + GitHub CI** - Despliegue continuo desde `master` a Amplify Hosting
 
 ## Phase Details
 
@@ -76,14 +76,14 @@ Plans:
 **Requirements**: (none — UX phase; regression coverage for AUTH-03/04/05 via M-1..M-5 manual flows)
 **Plans:** 8 plans
 Plans:
-- [ ] 03.1-01-PLAN.md — Wave 1: Foundation — install motion@^12.38.0 + Geist→IBM Plex (`app/layout.tsx`) + globals.css @theme token system + HAVI ring CSS + keyframes
-- [ ] 03.1-02-PLAN.md — Wave 2: Authenticator theme — `app/_styles/amplifyTheme.ts` + `<Wordmark>` component + `/login` ThemeProvider wrap (preserves Suspense + safeFromPath)
-- [ ] 03.1-03-PLAN.md — Wave 1: Pure-TS data layer — `app/_data/{types,mock,format,patterns}.ts` (locked names + iu flags + catch-all-LAST)
-- [ ] 03.1-04-PLAN.md — Wave 3: Primitives + hook + template — HaviRing, Icon, PageTransition, AppHeader, Composer, TypingIndicator, SuggestionChips, ActionPill, BigActionButton + useChatPersistence + `app/app/template.tsx` MotionConfig + curated icon SVGs
-- [ ] 03.1-05-PLAN.md — Wave 4: Composition — Sparkline, BarChart, SnapshotCard, ActionCard, AlertCard, TransferCard, TransactionRow, MessagesList, ChatMessage discriminated renderer
-- [ ] 03.1-06-PLAN.md — Wave 5: Chat home REPLACE — `app/app/page.tsx` (greeting + persistence + pattern dispatch + Hub.listen sign-out clear) + SignOutButton restyle
-- [ ] 03.1-07-PLAN.md — Wave 6: Sub-routes — `/app/grafica/[categoria]`, `/app/movimientos`, `/app/comparativa`, `/app/agente` (Sofía connecting → connected stepper)
-- [ ] 03.1-08-PLAN.md — Wave 7: Close-out — public `/` restyle + Phase 1 gauntlet + 10 manual flows (M-1..M-10) + SUMMARY + STATE + ROADMAP + REQUIREMENTS update (autonomous: false)
+- [x] 03.1-01-PLAN.md — Wave 1: Foundation — install motion@^12.38.0 + Geist→IBM Plex (`app/layout.tsx`) + globals.css @theme token system + HAVI ring CSS + keyframes
+- [x] 03.1-02-PLAN.md — Wave 2: Authenticator theme — `app/_styles/amplifyTheme.ts` + `<Wordmark>` component + `/login` ThemeProvider wrap (preserves Suspense + safeFromPath)
+- [x] 03.1-03-PLAN.md — Wave 1: Pure-TS data layer — `app/_data/{types,mock,format,patterns}.ts` (locked names + iu flags + catch-all-LAST)
+- [x] 03.1-04-PLAN.md — Wave 3: Primitives + hook + template — HaviRing, Icon, PageTransition, AppHeader, Composer, TypingIndicator, SuggestionChips, ActionPill, BigActionButton + useChatPersistence + `app/app/template.tsx` MotionConfig + curated icon SVGs
+- [x] 03.1-05-PLAN.md — Wave 4: Composition — Sparkline, BarChart, SnapshotCard, ActionCard, AlertCard, TransferCard, TransactionRow, MessagesList, ChatMessage discriminated renderer
+- [x] 03.1-06-PLAN.md — Wave 5: Chat home REPLACE — `app/app/page.tsx` (greeting + persistence + pattern dispatch + Hub.listen sign-out clear) + SignOutButton restyle
+- [x] 03.1-07-PLAN.md — Wave 6: Sub-routes — `/app/grafica/[categoria]`, `/app/movimientos`, `/app/comparativa`, `/app/agente` (Sofía connecting → connected stepper)
+- [x] 03.1-08-PLAN.md — Wave 7: Close-out — public `/` restyle + Phase 1 gauntlet + 10 manual flows (M-1..M-10) + SUMMARY + STATE + ROADMAP + REQUIREMENTS update (autonomous: false)
 
 ### Phase 4: Amplify Hosting + GitHub CI
 **Goal**: Cada push a `main` en GitHub dispara un build en AWS Amplify Hosting que despliega la app + backend a producción automáticamente.
@@ -106,10 +106,11 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Foundation & Amplify Backend Skeleton | 5/5 | Ready to verify | 2026-04-25 |
 | 2. Email/Password Auth + Authenticator UI | 5/5 | Ready to verify | 2026-04-25 |
 | 3. Protected Route & Auth Guard | 3/3 | Complete    | 2026-04-25 |
-| 4. Amplify Hosting + GitHub CI | 0/TBD | Not started | - |
+| 4. Amplify Hosting + GitHub CI | 1/1 | Complete | 2026-04-25 |
 
 ---
 *Roadmap created: 2026-04-24*
 *Phase 1 plans created: 2026-04-25*
 *Phase 2 plans created: 2026-04-25*
 *Phase 3 (Google OAuth Federation) removed: 2026-04-25 — see git log; AUTH-02 moved to Out of Scope. Phase 4 → 3, Phase 5 → 4.*
+*v1.0 milestone COMPLETE 2026-04-25 — all phases shipped, deployed live to Amplify Hosting. HaviCA rebrand committed. 7/7 v1 requirements satisfied (AUTH-02 dropped to Out of Scope).*

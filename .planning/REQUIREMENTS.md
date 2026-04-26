@@ -11,7 +11,7 @@ Requirements para el release inicial. Cada uno mapea a una phase del roadmap.
 
 - [x] **INFRA-01
 **: Backend Amplify Gen2 inicializado (`amplify/` directory + `defineBackend()` en `amplify/backend.ts`) y desplegable a personal sandbox vía `npx ampx sandbox`
-- [ ] **INFRA-02**: App desplegada en AWS Amplify Hosting con CI auto-deploy desde GitHub (push a `main` → build → deploy)
+- [x] **INFRA-02**: App desplegada en AWS Amplify Hosting con CI auto-deploy desde GitHub (push a `master` → build → deploy)
 - [x] **INFRA-03
 **: Vulnerabilidad PostCSS XSS resuelta (actualizar dependencias afectadas detectadas por el codebase mapper en `.planning/codebase/CONCERNS.md`)
 
@@ -52,7 +52,7 @@ Qué phases cubren qué requirements.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | INFRA-01 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
-| INFRA-02 | Phase 4 — Amplify Hosting + GitHub CI | Pending |
+| INFRA-02 | Phase 4 — Amplify Hosting + GitHub CI | Complete |
 | INFRA-03 | Phase 1 — Foundation & Amplify Backend Skeleton | Complete |
 | AUTH-01 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
 | AUTH-03 | Phase 2 — Email/Password Auth + Authenticator UI | Complete |
@@ -66,4 +66,4 @@ Qué phases cubren qué requirements.
 
 ---
 *Requirements defined: 2026-04-25*
-*Last updated: 2026-04-25 — AUTH-02 (Google OAuth) dropeado; Phase 3/4 renumeradas tras remoción de Google OAuth Federation*
+*Last updated: 2026-04-25 — INFRA-02 satisfied; Phase 4 (Hosting + CI) deployed live. v1.0 milestone: 7/7 requirements complete.*

@@ -27,12 +27,14 @@ Llegar al día del datatón con login funcionando, base desplegada y pipeline de
 - ✓ `<Authenticator>` integrado en Next.js (sign-up, sign-in, sign-out, reset password) — Validated en Phase 2
 - ✓ Sesión persiste entre refrescos (localStorage) — Validated en Phase 2
 - ✓ Página protegida `/app` con guard reusable — Validated en Phase 3 (`<AuthGuard>` + `app/app/layout.tsx` + safeFromPath open-redirect allowlist)
+- ✓ HaviCA conversational UI (Variante A: HAVI chat motor central + sub-routes + handoff humano + alert/success/warning + animaciones + desktop shell) — Validated en Phase 03.1
+- ✓ App desplegada en AWS Amplify Hosting con CI auto-deploy desde GitHub (push master → build → deploy live) — Validated en Phase 4
 
 ### Active
 
 <!-- Scope de v1.0. Building toward these. -->
 
-- [ ] App desplegada en AWS Amplify Hosting con CI desde GitHub
+(none — v1.0 milestone complete)
 
 ### Out of Scope
 
@@ -93,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-25 — Phase 3 (Protected Route & Auth Guard) complete: AUTH-04 satisfied via `<AuthGuard>` + `app/app/layout.tsx` + safeFromPath. Solo queda Phase 4 (Hosting + CI) para v1.0.*
+*Last updated: 2026-04-25 — v1.0 milestone COMPLETE. All 7 requirements satisfied: Phase 1 (foundation + CVE) + Phase 2 (Cognito email auth) + Phase 3 (auth guard) + Phase 03.1 (HaviCA conversational UI + desktop shell) + Phase 4 (Hosting + CI live). Product rebrand to HaviCA done. Ready for the datatón.*
