@@ -13,9 +13,11 @@ import { useActivePersona } from "@/app/_hooks/usePersona";
 import { newMessageId } from "@/app/_data/patterns";
 import {
   chat,
+  getNotification,
   report,
   type ChatMessage as ApiChatMessage,
   type LastReport,
+  type NotificationContext,
   type ReportRequest,
 } from "@/app/_lib/api";
 import type { ChatMessage, ReportChart } from "@/app/_data/types";
@@ -64,6 +66,12 @@ export default function ChatHome() {
   // Último reporte mostrado — se manda al chat para que el LLM pueda modificarlo
   // ("muéstramelo por mes", "y por categoría?").
   const [lastReport, setLastReport] = useState<LastReport | undefined>(undefined);
+  // Contexto de la notificación que el usuario tocó (si entró vía ?notif=<id>).
+  // Se manda en CADA mensaje subsecuente para que HAVI mantenga el aviso como
+  // ancla de la conversación.
+  const [notifContext, setNotifContext] = useState<NotificationContext | undefined>(
+    undefined,
+  );
 
   const pushChart = (chart: ReportChart) => {
     setMessages((prev) => [
@@ -124,6 +132,7 @@ export default function ChatHome() {
         persona.id,
         history,
         lastReport,
+        notifContext,
       );
       if (replyText) {
         setMessages((prev) => [
@@ -169,6 +178,76 @@ export default function ChatHome() {
     triggeredPromptRef.current = promptParam;
     void send(promptParam);
     router.replace("/app", { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, messages.length]);
+
+  // ─── Auto-send via ?notif=<id> (de la página de notificaciones / toast) ─
+  // Carga el detalle de la notif (incluye haviContext con el JSON original
+  // del aviso), guarda el contexto en estado para que se mande en cada
+  // mensaje subsecuente, y dispara el haviPrompt como primer mensaje del
+  // usuario.
+  const triggeredNotifRef = useRef<string | null>(null);
+  useEffect(() => {
+    const notifParam = searchParams.get("notif");
+    if (!notifParam) return;
+    if (triggeredNotifRef.current === notifParam) return;
+    if (messages.length === 0) return;
+    triggeredNotifRef.current = notifParam;
+
+    void (async () => {
+      try {
+        const detail = await getNotification(notifParam);
+        const ctx: NotificationContext = {
+          kind: detail.kind,
+          title: detail.title,
+          body: detail.body,
+          data: detail.haviContext,
+        };
+        setNotifContext(ctx);
+
+        // Empuja el mensaje del usuario y llama chat con el contexto inline,
+        // sin esperar a que el setState del notifContext propague (el effect
+        // se ejecuta antes del render).
+        const userMsg: ChatMessage = {
+          id: newMessageId(),
+          from: "user",
+          kind: "text",
+          text: detail.haviPrompt,
+        };
+        setMessages((prev) => [...prev, userMsg]);
+        setTyping(true);
+        try {
+          const history = toApiHistory([...messages, userMsg]);
+          const { text: replyText, reportRequest } = await chat(
+            persona.id,
+            history,
+            lastReport,
+            ctx,
+          );
+          if (replyText) {
+            setMessages((prev) => [
+              ...prev,
+              { id: newMessageId(), from: "havi", kind: "text", text: replyText },
+            ]);
+          }
+          if (reportRequest) await runReport(reportRequest);
+        } finally {
+          setTyping(false);
+        }
+      } catch (err) {
+        console.error("[notif] fetch error", err);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: newMessageId(),
+            from: "havi",
+            kind: "text",
+            text: "No pude cargar el contexto de esa notificación. Cuéntame de qué se trataba.",
+          },
+        ]);
+      }
+      router.replace("/app", { scroll: false });
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, messages.length]);
 

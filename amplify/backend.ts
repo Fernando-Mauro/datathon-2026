@@ -10,12 +10,14 @@ import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations
 import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import { auth } from "./auth/resource";
 import { chatHandler } from "./functions/chat-handler/resource";
+import { notificationsHandler } from "./functions/notifications-handler/resource";
 import { reportHandler } from "./functions/report-handler/resource";
 import { savedChartsHandler } from "./functions/saved-charts-handler/resource";
 
 const backend = defineBackend({
   auth,
   chatHandler,
+  notificationsHandler,
   reportHandler,
   savedChartsHandler,
 });
@@ -94,6 +96,25 @@ httpApi.addRoutes({
   path: "/saved-charts/{id}",
   methods: [HttpMethod.DELETE],
   integration: savedChartsIntegration,
+  authorizer: jwtAuthorizer,
+});
+
+const notificationsIntegration = new HttpLambdaIntegration(
+  "NotificationsHandlerIntegration",
+  backend.notificationsHandler.resources.lambda,
+);
+
+httpApi.addRoutes({
+  path: "/notifications",
+  methods: [HttpMethod.GET],
+  integration: notificationsIntegration,
+  authorizer: jwtAuthorizer,
+});
+
+httpApi.addRoutes({
+  path: "/notifications/{id}",
+  methods: [HttpMethod.GET],
+  integration: notificationsIntegration,
   authorizer: jwtAuthorizer,
 });
 

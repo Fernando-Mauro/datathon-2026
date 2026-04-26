@@ -47,10 +47,24 @@ type LastReport = {
   data: Array<Record<string, unknown>>;
 };
 
+/** Contexto de la notificación que el usuario tocó para iniciar el chat.
+ *  Cuando viene presente, lo inyectamos al system prompt para que HAVI
+ *  responda específicamente sobre ese aviso (ej. el usuario tocó una
+ *  alerta de "tu flujo va negativo el día X" → HAVI debe usar esa fecha
+ *  y montos como base de la conversación, no inventar otros). */
+type NotificationContext = {
+  kind: string;
+  title: string;
+  body: string;
+  /** Payload original del aviso (mismo JSON con que se generó la notif). */
+  data: unknown;
+};
+
 type ChatRequest = {
   personaUserId: string;
   messages: ChatMessage[];
   lastReport?: LastReport;
+  notificationContext?: NotificationContext;
 };
 
 /** Tool call que el LLM emite cuando quiere generar/modificar un reporte. */
@@ -126,7 +140,11 @@ async function loadPersonaContext(userId: string): Promise<PersonaContext | null
 
 // ─── System prompt ──────────────────────────────────────────────────────
 
-function buildSystemPrompt(ctx: PersonaContext, lastReport?: LastReport): string {
+function buildSystemPrompt(
+  ctx: PersonaContext,
+  lastReport?: LastReport,
+  notif?: NotificationContext,
+): string {
   const lugar = ctx.ciudad ?? ctx.estado ?? "México";
   const top = ctx.topCategories
     .map(
@@ -134,6 +152,20 @@ function buildSystemPrompt(ctx: PersonaContext, lastReport?: LastReport): string
         `${c.categoria_mcc} ($${c.total.toLocaleString("es-MX", { maximumFractionDigits: 0 })})`,
     )
     .join(", ");
+
+  const notifBlock = notif
+    ? `\n\nORIGEN DE ESTA CONVERSACIÓN — alerta predictiva que el usuario tocó:
+- tipo: ${notif.kind}
+- título: "${notif.title}"
+- texto mostrado al usuario: "${notif.body}"
+- datos crudos del aviso: ${JSON.stringify(notif.data)}
+
+REGLA CRÍTICA sobre el aviso:
+- El usuario abrió el chat HABLANDO de este aviso. Ancla TODA la respuesta a estos datos: cita los montos, fechas y categorías exactos del JSON arriba.
+- NO inventes otros números ni cambies de tema; si el usuario pregunta algo no relacionado, redirígelo de vuelta al aviso ("Antes de eso, sobre el aviso de X…").
+- Si el aviso menciona una fecha futura (ej. "dia_proyectado_negativo"), úsala literal como referencia temporal.
+- NO menciones que recibiste el aviso por contexto; háblale como si tú mismo lo hubieras detectado.`
+    : "";
 
   const lastReportBlock = lastReport
     ? `\n\nÚltimo reporte mostrado al usuario:
@@ -158,7 +190,7 @@ Contexto del usuario activo:
 - Ocupación: ${ctx.ocupacion}, Ingreso mensual: $${ctx.ingreso_mensual_mxn.toLocaleString("es-MX")} MXN
 - Score buró: ${ctx.score_buro}
 - Saldo total disponible (cuentas + inversión): $${ctx.balance.toLocaleString("es-MX", { maximumFractionDigits: 0 })} MXN
-- Top 3 categorías de gasto últimos 30 días: ${top || "sin movimientos"}${lastReportBlock}
+- Top 3 categorías de gasto últimos 30 días: ${top || "sin movimientos"}${notifBlock}${lastReportBlock}
 
 ALCANCE — sólo respondes preguntas sobre:
 1. Las finanzas del usuario activo: saldo, gastos, transacciones, productos, alertas, comparativas
@@ -343,7 +375,7 @@ export const handler = async (
       };
     }
 
-    const system = buildSystemPrompt(ctx, body.lastReport);
+    const system = buildSystemPrompt(ctx, body.lastReport, body.notificationContext);
     const { text, reportRequest, usage } = await callBedrock(
       system,
       body.messages as ChatMessage[],

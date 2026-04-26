@@ -11,6 +11,35 @@ const API_URL: string | undefined = (outputs as { custom?: { apiUrl?: string } }
 
 export type ChatMessage = { role: "user" | "assistant"; content: string };
 
+export type NotificationKind =
+  | "cashflow_risk"
+  | "suscripcion_subio"
+  | "regano"
+  | "recurrencia"
+  | "anomalia";
+
+export type NotificationItem = {
+  id: string;
+  userId: string;
+  kind: NotificationKind;
+  title: string;
+  body: string;
+  haviPrompt: string;
+  /** ISO 8601 UTC. */
+  scheduledAt: string;
+};
+
+export type NotificationDetail = NotificationItem & {
+  haviContext: unknown;
+};
+
+export type NotificationContext = {
+  kind: string;
+  title: string;
+  body: string;
+  data: unknown;
+};
+
 async function authedFetch(
   path: string,
   init?: { method?: string; body?: unknown },
@@ -62,12 +91,39 @@ export async function chat(
   personaUserId: string,
   messages: ChatMessage[],
   lastReport?: LastReport,
+  notificationContext?: NotificationContext,
 ): Promise<ChatResponse> {
   const res = await authedFetch("/chat", {
-    body: { personaUserId, messages, lastReport },
+    body: { personaUserId, messages, lastReport, notificationContext },
   });
   if (!res.ok) {
     throw new Error(`chat failed: ${res.status} ${await res.text().catch(() => "")}`);
+  }
+  return res.json();
+}
+
+// ─── Notifications ───────────────────────────────────────────────────────
+
+export async function listNotifications(
+  personaUserId: string,
+): Promise<NotificationItem[]> {
+  const res = await authedFetch(
+    `/notifications?personaUserId=${encodeURIComponent(personaUserId)}`,
+    { method: "GET" },
+  );
+  if (!res.ok) {
+    throw new Error(`notifications failed: ${res.status} ${await res.text().catch(() => "")}`);
+  }
+  const json = (await res.json()) as { items: NotificationItem[] };
+  return json.items;
+}
+
+export async function getNotification(id: string): Promise<NotificationDetail> {
+  const res = await authedFetch(`/notifications/${encodeURIComponent(id)}`, {
+    method: "GET",
+  });
+  if (!res.ok) {
+    throw new Error(`notification fetch failed: ${res.status} ${await res.text().catch(() => "")}`);
   }
   return res.json();
 }
