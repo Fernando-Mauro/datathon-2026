@@ -18,6 +18,11 @@ const KEY = "havica-active-persona-v2";
 
 type Ctx = {
   persona: Persona | null;
+  /** True once the provider has finished reading localStorage on mount.
+   *  Consumers (e.g. PersonaGuard) must wait for this before deciding
+   *  there's no persona — the first render is always null on the client,
+   *  even when localStorage has a value. */
+  hydrated: boolean;
   setPersona: (p: Persona) => void;
   clearPersona: () => void;
 };
@@ -37,11 +42,13 @@ function readStored(): Persona | null {
 
 export function PersonaProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState<Persona | null>(null);
+  const [hydrated, setHydrated] = useState(false);
 
   // Hydrate from localStorage on mount.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setActive(readStored());
+    setHydrated(true);
   }, []);
 
   // Clear active persona on sign-out.
@@ -77,8 +84,8 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<Ctx>(
-    () => ({ persona: active, setPersona, clearPersona }),
-    [active, setPersona, clearPersona],
+    () => ({ persona: active, hydrated, setPersona, clearPersona }),
+    [active, hydrated, setPersona, clearPersona],
   );
 
   return <PersonaCtx.Provider value={value}>{children}</PersonaCtx.Provider>;

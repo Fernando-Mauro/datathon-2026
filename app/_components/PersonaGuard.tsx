@@ -12,13 +12,14 @@ function isPickerRoute(pathname: string) {
 export function PersonaGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { persona } = usePersona();
+  const { persona, hydrated } = usePersona();
 
   useEffect(() => {
     if (isPickerRoute(pathname)) return;
+    if (!hydrated) return; // wait for localStorage read on mount
     if (persona) return;
     router.replace("/app/personas");
-  }, [persona, pathname, router]);
+  }, [hydrated, persona, pathname, router]);
 
   if (!isPickerRoute(pathname) && !persona) {
     return (
